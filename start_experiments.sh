@@ -28,21 +28,21 @@ source $CATKIN_PATH/devel/setup.bash
 
 declare -A worlds
 worlds["sr"]="simple_room"
-#worlds["sr_b"]="simple_room__boxes"
-#worlds["sr_t"]="simple_room__tables"
+worlds["sr_b"]="simple_room__boxes"
+worlds["sr_t"]="simple_room__tables"
 # # worlds["sr_sp"]="simple_room__static_people"
 # # worlds["sr_dp"]="simple_room__dynamic_people"
 
 declare -A observations
 observations["lsf"]="laser_scan_front_observation"
-#observations["pcf"]="point_cloud_front_observation"
-#observations["lsf_pcf"]="laser_scan_front_observation point_cloud_front_observation"
+observations["pcf"]="point_cloud_front_observation"
+observations["lsf_pcf"]="laser_scan_front_observation point_cloud_front_observation"
 
 declare -A planners
-#planners["base"]="base_local_planner/TrajectoryPlannerROS"
-#planners["dwa"]="dwa_local_planner/DWAPlannerROS"
+planners["base"]="base_local_planner/TrajectoryPlannerROS"
+planners["dwa"]="dwa_local_planner/DWAPlannerROS"
 planners["eband"]="eband_local_planner/EBandPlannerROS"
-#planners["teb"]="teb_local_planner/TebLocalPlannerROS"
+planners["teb"]="teb_local_planner/TebLocalPlannerROS"
 
 ######################################################################
 
@@ -63,7 +63,7 @@ do
       observation_sources=${observations[${observation}]}
       local_planner=${planners[${planner}]}
       use_fake_localization="true"
-      max_experiments="2"
+      max_experiments="5"
       path_storage=$path/$world-$observation-$planner
 
       mkdir $path_storage
