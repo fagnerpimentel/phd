@@ -27,7 +27,7 @@ source $CATKIN_PATH/devel/setup.bash
 ######################################################################
 
 rviz_file="`rospack find social_experiments`/config/rviz/experiment.rviz"
-enable_gui_gazebo="true"
+enable_gui_gazebo="false"
 enable_gui_rviz="true"
 enable_gui_teleop="false"
 
