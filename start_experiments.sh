@@ -37,8 +37,8 @@ worlds["sr_t"]="simple_room__tables"
 declare -A observations
 # observations["s1"]="laser_scan_front_observation"
 # observations["s2"]="laser_scan_front_observation laser_scan_back_observation"
-# observations["s3"]="laser_scan_front_observation laser_scan_back_observation point_cloud_base_front_observation"
-observations["s4"]="laser_scan_front_observation laser_scan_back_observation point_cloud_base_front_observation point_cloud_torso_front_observation"
+observations["s3"]="laser_scan_front_observation laser_scan_back_observation point_cloud_base_front_observation"
+# observations["s4"]="laser_scan_front_observation laser_scan_back_observation point_cloud_base_front_observation point_cloud_torso_front_observation"
 
 declare -A planners
 planners["base"]="base_local_planner/TrajectoryPlannerROS"
