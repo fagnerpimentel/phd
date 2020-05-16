@@ -31,15 +31,15 @@ for dir in dirs:
     if not os.path.exists(path+'/'+dir+"/maps/"):
         os.mkdir(path+'/'+dir+"/maps/")
 
-    # if not os.path.exists(path+'/'+dir+"/error/"):
-    #     os.mkdir(path+'/'+dir+"/error/")
+    if not os.path.exists(path+'/'+dir+"/loc_error/"):
+        os.mkdir(path+'/'+dir+"/loc_error/")
 
     if not os.path.exists(path+'/'+dir+"/factor/"):
         os.mkdir(path+'/'+dir+"/factor/")
 
     result= pd.read_csv(path+'/'+dir+'/result.csv')
     params = yaml.load(open(path+'/'+dir+'/params.yaml', "r"))
-    # localization_error = json.loads(open(path+'/'+dir+'/localization_error.json').read())
+    localization_error = json.loads(open(path+'/'+dir+'/localization_error.json').read())
     factor = json.loads(open(path+'/'+dir+'/real_time_factor.json').read())
     path_min_x = json.loads(open(path+'/'+dir+'/path_plan_x.json').read())
     path_min_y = json.loads(open(path+'/'+dir+'/path_plan_y.json').read())
@@ -66,7 +66,7 @@ for dir in dirs:
         path_min = np.zeros((a,b,4))
         path_elapsed = np.zeros((a,b,4))
 
-        # values_le = localization_error[str(experiment_id)]
+        values_le = localization_error[str(experiment_id)]
         values_fa = factor[str(experiment_id)]
 
         values_pmx = path_min_x[str(experiment_id)]
@@ -103,6 +103,7 @@ for dir in dirs:
         #######################################################
 
         plt.figure(figsize=(10, 10))
+        plt.grid(b=None)
 
         plt.subplot(2, 1, 1)
         plt.imshow(img, cmap='gray')
@@ -116,9 +117,9 @@ for dir in dirs:
         plt.close()
 
 
-        # plt.clf()
-        # sns.lineplot(x=range(0,len(values_le)), y=values_le, palette="tab10", linewidth=2.5)
-        # plt.savefig(path+'/'+dir+"/error/"+str(experiment_id)+".png")
+        plt.clf()
+        sns.lineplot(x=range(0,len(values_le)), y=values_le, palette="tab10", linewidth=2.5)
+        plt.savefig(path+'/'+dir+"/loc_error/"+str(experiment_id)+".png")
 
         plt.clf()
         sns.lineplot(x=range(0,len(values_fa)), y=values_fa, palette="tab10", linewidth=2.5)
