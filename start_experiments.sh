@@ -48,38 +48,32 @@ mkdir -p $path/
 for world in ${!worlds[@]};
 do
 
-  for observation in ${!observations[@]};
+  for planner in ${!planners[@]};
   do
 
-    for planner in ${!planners[@]};
-    do
+    map_name=${worlds[${world}]}
+    local_planner=${planners[${planner}]}
 
-      map_name=${worlds[${world}]}
-      observation_sources=${observations[${observation}]}
-      global_planner="global_planner/GlobalPlanner"
-      local_planner=${planners[${planner}]}
+    path_storage=$path/$world-$planner
 
-      path_storage=$path/$world-$observation-$planner
+    mkdir $path_storage
 
-      mkdir $path_storage
+    echo "world: " $map_name
+    echo "observation: " $observation_sources
+    echo "global planner: " $global_planner
+    echo "local planner: " $local_planner
 
-      echo "world: " $map_name
-      echo "observation: " $observation_sources
-      echo "global planner: " $global_planner
-      echo "local planner: " $local_planner
+    roslaunch social_experiments experiment.launch \
+      use_fake_localization:="$use_fake_localization" \
+      max_experiments:="$max_experiments" \
+      xy_goal_tolerance:="$xy_goal_tolerance" \
+      yaw_goal_tolerance:="$yaw_goal_tolerance" \
+      map_name:="$map_name" \
+      global_planner:="$global_planner" \
+      local_planner:="$local_planner" \
+      observation_sources:="$observation_sources" \
+      path_storage:="$path_storage"
 
-      roslaunch social_experiments experiment.launch \
-        use_fake_localization:="$use_fake_localization" \
-        max_experiments:="$max_experiments" \
-        xy_goal_tolerance:="$xy_goal_tolerance" \
-        yaw_goal_tolerance:="$yaw_goal_tolerance" \
-        map_name:="$map_name" \
-        global_planner:="$global_planner" \
-        local_planner:="$local_planner" \
-        observation_sources:="$observation_sources" \
-        path_storage:="$path_storage"
-
-    done
   done
 done
 

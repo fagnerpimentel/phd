@@ -3,7 +3,7 @@
 catkin_path="/catkin_ws"
 result_path="/result"
 
-now="$(date +'%H_%M_%S-%d_%m_%Y')"
+now="$(date +'%Y-%m-%d_%H-%M-%S')"
 container_name="social-"$now
 
 docker run -it -d \
@@ -22,14 +22,17 @@ docker cp ../plot_maps.py           $container_name:$catkin_path
 docker exec -w $catkin_path -it     $container_name bash -c './install_packages.sh'
 docker exec -w $catkin_path -it     $container_name bash -c 'source /opt/ros/melodic/setup.bash; catkin_make'
 
-docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_1-base'
-docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_1-dwa'
-docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_1-eband'
-docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_1-teb'
-docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_2-eband'
-docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_2-teb'
-# docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_3'
-# docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_4'
+docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_1-amcl'
+docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_1-fl'
+docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_2-carrot'
+docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_2-global'
+# docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_3-dwa'
+# docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_3-eband'
+# docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_3-teb'
+# docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_4-eband'
+# docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_4-teb'
+# docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_5'
+# docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_6'
 
 docker cp $container_name:$result_path  ~/result_$container_name
 

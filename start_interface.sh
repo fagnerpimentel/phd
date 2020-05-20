@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ -z "${CATKIN_PATH}" ]]; then
+  echo "You need to set the CATKIN_PATH env variable before start!"
+  exit
+fi
+
 ######################################################################
 
 # get machine ip
