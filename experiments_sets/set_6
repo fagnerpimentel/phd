@@ -9,4 +9,4 @@ declare -A worlds
 worlds["sr_fk5"]="simple_room__fei_k5"
 
 declare -A planners
-planners["eband"]="eband_local_planner/EBandPlannerROS"
+planners["teb"]="teb_local_planner/TebLocalPlannerROS"

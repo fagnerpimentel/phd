@@ -2,7 +2,7 @@ use_fake_localization="true"
 max_experiments="100"
 xy_goal_tolerance="0.1"
 yaw_goal_tolerance="3.1415"
-global_planner="carrot_planner/CarrotPlanner"
+global_planner="navfn/NavfnROS"
 observation_sources="laser_scan_front_observation laser_scan_back_observation"
 
 declare -A worlds

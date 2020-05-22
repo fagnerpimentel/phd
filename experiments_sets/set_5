@@ -11,4 +11,4 @@ worlds["sr_dp"]="simple_room__dynamic_people"
 worlds["sr_m2"]="simple_room__mix_2"
 
 declare -A planners
-planners["eband"]="eband_local_planner/EBandPlannerROS"
+planners["teb"]="teb_local_planner/TebLocalPlannerROS"
