@@ -24,7 +24,6 @@ docker exec -w $catkin_path -it     $container_name bash -c 'source /opt/ros/mel
 
 docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_1-amcl'
 docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_1-fl'
-docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_2-carrot'
 docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_2-global'
 # docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_3-dwa'
 # docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_3-eband'
