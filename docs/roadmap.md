@@ -1,10 +1,11 @@
 # TODO :
+
+* 1 **Texto** - falar sobre a [otimização](https://github.com/zkytony/ROSNavigationGuide/blob/master/main.pdf)
 * 1 **Texto** - **Organizar metodologia**
-* 1 **Texto** - adicionar resultados
-* 1 **Texto** - adicionar discursão
+* 1 **Texto** - **adicionar resultados**
+* 1 **Texto** - **adicionar discursão**
 * 1 **Texto** - Refazer referencia bibliografica
 * 1 **Texto** - Organizar introducao
-* 1 **Texto** - falar sobre a [otimização](https://github.com/zkytony/ROSNavigationGuide/blob/master/main.pdf)
 * 1 **Experimentos** - **otimizar eband**
 * 1 **Experimentos** - **desviar de pequenos objetos**
 * 1 **Experimentos** - preparar ambiente real
@@ -27,6 +28,7 @@
 * 3 **Experimentos** - apresentar p-value dos resultados
 -
 * 4 **hera_description** - documantar a verificação de colisão
+* 4 **hera_description** - documentar os parametros dos sensores simulados e verificar se são iguais ao real
 * 4 **hera_control** - add joint control plugin
 * 4 **hera_description** - add yaml file with robot measures
 * 4 **hera_description** - falar sobre joint state gui no readme
