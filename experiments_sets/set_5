@@ -3,7 +3,7 @@ max_experiments="100"
 xy_goal_tolerance="0.1"
 yaw_goal_tolerance="3.1415"
 global_planner="global_planner/GlobalPlanner"
-observation_sources="laser_scan_front_observation laser_scan_back_observation"
+observation_sources="laser_scan_front_observation laser_scan_back_observation point_cloud_base_front_observation point_cloud_torso_front_observation"
 
 declare -A worlds
 worlds["sr_sp"]="simple_room__static_people"

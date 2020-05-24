@@ -4,6 +4,11 @@ xy_goal_tolerance="0.1"
 yaw_goal_tolerance="3.1415"
 global_planner="global_planner/GlobalPlanner"
 
+# observation_sources="laser_scan_front_observation"
+# observation_sources="laser_scan_front_observation laser_scan_back_observation"
+# observation_sources="laser_scan_front_observation laser_scan_back_observation point_cloud_base_front_observation"
+observation_sources="laser_scan_front_observation laser_scan_back_observation point_cloud_base_front_observation point_cloud_torso_front_observation"
+
 declare -A worlds
 # worlds["sr"]="simple_room"
 # worlds["sr_b"]="simple_room__boxes"
@@ -15,12 +20,6 @@ declare -A worlds
 worlds["sr_dp"]="simple_room__dynamic_people"
 # worlds["sr_m2"]="simple_room__mix_2"
 # # worlds["sr_fk5"]="simple_room__fei_k5"
-
-declare -A observations
-# observations["s1"]="laser_scan_front_observation"
-# observations["s2"]="laser_scan_front_observation laser_scan_back_observation"
-observations["s3"]="laser_scan_front_observation laser_scan_back_observation point_cloud_base_front_observation"
-# observations["s4"]="laser_scan_front_observation laser_scan_back_observation point_cloud_base_front_observation point_cloud_torso_front_observation"
 
 declare -A planners
 # planners["base"]="base_local_planner/TrajectoryPlannerROS"
