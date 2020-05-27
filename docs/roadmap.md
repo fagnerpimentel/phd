@@ -101,8 +101,10 @@ legenda:
 #####################################################
 
 # Trabalhos futuros
+* migrar para ROS 2
 * Stageros (simulador?)
 * Base circular (design)
 * laser giratório (design)
 * Usar navigation omnidirecional  (Planejadores local)
 * Fazer combinações dos sesores para construir os costmaps de obstáculos (clearing, marking)
+* implementar navegação sem lasers, ultrasomou IR (camada de mapa de custo com modelo de mundo)

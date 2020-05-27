@@ -56,13 +56,10 @@ do
 
     path_storage=$path/$world-$planner
 
+    rm -r $path_storage
     mkdir $path_storage
 
-    echo "world: " $map_name
-    echo "observation: " $observation_sources
-    echo "global planner: " $global_planner
-    echo "local planner: " $local_planner
-
+    export ROS_LOG_DIR=$path_storage/log
     roslaunch social_experiments experiment.launch \
       use_fake_localization:="$use_fake_localization" \
       max_experiments:="$max_experiments" \
@@ -73,9 +70,13 @@ do
       local_planner:="$local_planner" \
       observation_sources:="$observation_sources" \
       path_storage:="$path_storage"
+    unset ROS_LOG_DIR
 
   done
 done
+
+unset ROS_MASTER_URI
+unset ROS_IP
 
 cp `rospack find hera_bringup`/resources/map/simple_room/map.pgm $path
 python3 plot_result.py $path

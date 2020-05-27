@@ -37,4 +37,4 @@ enable_gui_rviz="true"
 enable_gui_teleop="false"
 
 # start interface
-roslaunch hera_bringup interface.launch rviz_file:=$rviz_file enable_gui_gazebo:=$enable_gui_gazebo enable_gui_rviz:=$enable_gui_rviz enable_gui_teleop:=$enable_gui_teleop
+roslaunch --wait hera_bringup interface.launch rviz_file:=$rviz_file enable_gui_gazebo:=$enable_gui_gazebo enable_gui_rviz:=$enable_gui_rviz enable_gui_teleop:=$enable_gui_teleop
