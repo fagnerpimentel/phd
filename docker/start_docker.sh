@@ -33,6 +33,6 @@ docker exec -w $catkin_path -it     $container_name bash -c './start_experiments
 # docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_5'
 # docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_6'
 
-docker cp $container_name:$result_path  ~/result_$container_name
+docker cp $container_name:$result_path $HOME/result_$container_name
 
 docker container kill $container_name
