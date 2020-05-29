@@ -25,12 +25,12 @@ docker exec -w $catkin_path -it     $container_name bash -c 'source /opt/ros/mel
 docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_1-amcl'
 docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_1-fl'
 docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_2-global'
-# docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_3-dwa'
-# docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_3-eband'
-# docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_3-teb'
-# docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_4-eband'
-# docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_4-teb'
-# docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_5'
+docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_3-dwa'
+docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_3-eband'
+docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_3-teb'
+docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_4-eband'
+docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_4-teb'
+docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_5'
 # docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/set_6'
 
 docker cp $container_name:$result_path $HOME/result_$container_name
