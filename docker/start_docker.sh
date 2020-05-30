@@ -6,7 +6,11 @@ result_path="/result"
 now="$(date +'%Y-%m-%d_%H-%M-%S')"
 container_name="social-"$now
 
+xhost +
 docker run -it -d \
+  --volume "/tmp/.X11-unix:/tmp/.X11-unix" \
+  --env "DISPLAY=:0" \
+  --env "QT_X11_NO_MITSHM=1" \
   --env CATKIN_PATH=/$catkin_path/ \
   --env RESULT_PATH=/$result_path/ \
   --env GAZEBO_MODEL_PATH='/home/catkin_social/src/social_worlds/models/:/home/catkin_social/src/social_worlds/models/3dparty/' \
