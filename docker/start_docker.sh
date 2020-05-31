@@ -6,11 +6,10 @@ result_path="/result"
 now="$(date +'%Y-%m-%d_%H-%M-%S')"
 container_name="social-"$now
 
-xhost +
+Xvfb :2 -screen 0 1024x768x24 &
 docker run -it -d \
-  --volume "/tmp/.X11-unix:/tmp/.X11-unix" \
-  --env "DISPLAY=:0" \
-  --env "QT_X11_NO_MITSHM=1" \
+  --volume "/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+  --env "DISPLAY=:2" \
   --env CATKIN_PATH=/$catkin_path/ \
   --env RESULT_PATH=/$result_path/ \
   --env GAZEBO_MODEL_PATH='/home/catkin_social/src/social_worlds/models/:/home/catkin_social/src/social_worlds/models/3dparty/' \
@@ -39,4 +38,5 @@ docker exec -w $catkin_path -it     $container_name bash -c './start_experiments
 
 docker cp $container_name:$result_path $HOME/result_$container_name
 
+killall Xvfb
 docker container kill $container_name
