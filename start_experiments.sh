@@ -39,6 +39,8 @@ source $CATKIN_PATH/devel/setup.bash
 params_file=$1
 source $params_file
 max_experiments="10"
+xy_goal_tolerance="0.1"
+yaw_goal_tolerance="3.1415"
 
 ######################################################################
 
@@ -48,31 +50,28 @@ mkdir -p $path/
 for world in ${!worlds[@]};
 do
 
-  for planner in ${!planners[@]};
-  do
+  map_name=${worlds[${world}]}
 
-    map_name=${worlds[${world}]}
-    local_planner=${planners[${planner}]}
+  path_storage=$path/$world
 
-    path_storage=$path/$world-$planner
+  rm -r $path_storage
+  mkdir $path_storage
 
-    rm -r $path_storage
-    mkdir $path_storage
+  export ROS_LOG_DIR=$path_storage/log
+  roslaunch social_experiments experiment.launch \
+    use_fake_localization:="$use_fake_localization" \
+    max_experiments:="$max_experiments" \
+    xy_goal_tolerance:="$xy_goal_tolerance" \
+    yaw_goal_tolerance:="$yaw_goal_tolerance" \
+    map_name:="$map_name" \
+    global_planner:="$global_planner" \
+    local_planner:="$local_planner" \
+    global_layers:="$global_layers" \
+    local_layers:="$local_layers" \
+    observation_sources:="$observation_sources" \
+    path_storage:="$path_storage"
+  unset ROS_LOG_DIR
 
-    export ROS_LOG_DIR=$path_storage/log
-    roslaunch social_experiments experiment.launch \
-      use_fake_localization:="$use_fake_localization" \
-      max_experiments:="$max_experiments" \
-      xy_goal_tolerance:="$xy_goal_tolerance" \
-      yaw_goal_tolerance:="$yaw_goal_tolerance" \
-      map_name:="$map_name" \
-      global_planner:="$global_planner" \
-      local_planner:="$local_planner" \
-      observation_sources:="$observation_sources" \
-      path_storage:="$path_storage"
-    unset ROS_LOG_DIR
-
-  done
 done
 
 unset ROS_MASTER_URI

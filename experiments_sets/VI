@@ -1,0 +1,9 @@
+use_fake_localization="true"
+global_planner="global_planner/GlobalPlanner"
+local_planner="teb_local_planner/TebLocalPlannerROS"
+global_layers="[ {name: static_layer, type: 'costmap_2d::StaticLayer'}, {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}, {name: proxemic_layer, type: 'social_navigation_layers::ProxemicLayer'}]"
+local_layers="[ {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}]"
+observation_sources="laser_scan_front_observation laser_scan_back_observation point_cloud_base_front_observation point_cloud_torso_front_observation"
+
+declare -A worlds
+worlds["sr_fei"]="simple_room__fei_k5"

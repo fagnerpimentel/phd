@@ -9,6 +9,7 @@ import pandas as pd
 import numpy as np
 import sys
 import os
+import re
 
 path = sys.argv[1]
 space_factor_tolerance = 5
@@ -33,11 +34,11 @@ for dir in dirs:
     result=pd.read_csv(path+'/'+dir+'/result.csv')
     max_experiments = result.i.count()
 
-    SUCCESS = result.status.tolist().count('SUCCESS') / max_experiments*100
-    SPACE_EXCEEDED = result.status.tolist().count('SPACE_EXCEEDED') / max_experiments*100
-    TIME_EXCEEDED = result.status.tolist().count('TIME_EXCEEDED') / max_experiments*100
-    ABORTION = result.status.tolist().count('ABORTION') / max_experiments*100
-    COLLISION = result.status.tolist().count('COLLISION') / max_experiments*100
+    SUCCESS = result.status.tolist().count('SUCCESS') / max_experiments
+    SPACE_EXCEEDED = result.status.tolist().count('SPACE_EXCEEDED') / max_experiments
+    TIME_EXCEEDED = result.status.tolist().count('TIME_EXCEEDED') / max_experiments
+    ABORTION = result.status.tolist().count('ABORTION') / max_experiments
+    COLLISION = result.status.tolist().count('COLLISION') / max_experiments
 
     space_elapsed = np.array(result.space_elapsed.tolist())
     space_min = np.array(result.space_min.tolist())
@@ -55,24 +56,24 @@ for dir in dirs:
     time_coef_success =  np.array([time_coef[ind] for ind in success_indexes])
 
 
-    v_xlabels.append(dir.replace('_', '\n') + '\n (' + format(SUCCESS, '.2f') + '%)')
+    v_xlabels.append(dir.replace('_', '\n') + '\n (' + format(SUCCESS*100, '.2f') + '%)')
 
     v_space_mean.append(space_coef_success.mean() if(len(space_coef_success) > 0) else 0)
     v_space_std.append(space_coef_success.std() if(len(space_coef_success) > 0) else 0)
     v_time_mean.append(time_coef_success.mean() if(len(time_coef_success) > 0) else 0)
     v_time_std.append(time_coef_success.std() if(len(time_coef_success) > 0) else 0)
 
-    v_SUCCESS.append(format(SUCCESS, '.2f') + '\%')
-    v_SPACE_EXCEEDED.append(format(SPACE_EXCEEDED, '.2f') + '\%')
-    v_TIME_EXCEEDED.append(format(TIME_EXCEEDED, '.2f') + '\%')
-    v_ABORTION.append(format(ABORTION, '.2f') + '\%')
-    v_COLLISION.append(format(COLLISION, '.2f') + '\%')
+    v_SUCCESS.append(SUCCESS)
+    v_SPACE_EXCEEDED.append(SPACE_EXCEEDED)
+    v_TIME_EXCEEDED.append(TIME_EXCEEDED)
+    v_ABORTION.append(ABORTION)
+    v_COLLISION.append(COLLISION)
 
-    result = result.replace('SUCCESS', 'SUCCESS:              ' + format(SUCCESS, '.2f') + '%')
-    result = result.replace('SPACE_EXCEEDED', 'SPACE_EXCEEDED:' + format(SPACE_EXCEEDED, '.2f') + '%')
-    result = result.replace('TIME_EXCEEDED', 'TIME_EXCEEDED:  ' + format(TIME_EXCEEDED, '.2f') + '%')
-    result = result.replace('ABORTION', 'ABORTION:            ' + format(ABORTION, '.2f') + '%')
-    result = result.replace('COLLISION', 'COLLISION:          ' + format(COLLISION, '.2f') + '%')
+    result = result.replace('SUCCESS', 'SUCCESS:              ' + format(SUCCESS*100, '.2f') + '%')
+    result = result.replace('SPACE_EXCEEDED', 'SPACE_EXCEEDED:' + format(SPACE_EXCEEDED*100, '.2f') + '%')
+    result = result.replace('TIME_EXCEEDED', 'TIME_EXCEEDED:  ' + format(TIME_EXCEEDED*100, '.2f') + '%')
+    result = result.replace('ABORTION', 'ABORTION:            ' + format(ABORTION*100, '.2f') + '%')
+    result = result.replace('COLLISION', 'COLLISION:          ' + format(COLLISION*100, '.2f') + '%')
 
     sns.set(style="whitegrid")
     # plt.suptitle('Accuracy: ' + str(SUCCESS) + '%')
@@ -125,36 +126,18 @@ plt.savefig(path+'/all.png')
 
 
 # generate latex
-tex = open(path+'/result.tex','w+')
-
-a = ['l']*len(dirs)
-b = [x.replace('_','\_') for x in dirs]
-
-tex.write('\\begin{table}[h]' + '\n')
-tex.write('\centering' + '\n')
-tex.write('\caption{'+ path.replace('_','\_') +'}' + '\n')
-tex.write('\label{}' + '\n')
-tex.write('\\resizebox{\\textwidth}{!}{' + '\n')
-tex.write('\\begin{tabular}{|l|'+ '|'.join(a) +'|}' + '\n')
-tex.write('\hline' + '\n')
-tex.write('& '+ ' & '.join(b) +' \\\\' + '\n')
-tex.write('\hline' + '\n')
-tex.write('\hline' + '\n')
-tex.write('Space coeficience & '+ ' & '.join([format(x, '.2f') for x in v_space_mean]) +' \\\\' + '\n')
-tex.write('\hline' + '\n')
-tex.write('Time coeficience & '+ ' & '.join([format(x, '.2f') for x in v_time_mean]) +' \\\\' + '\n')
-tex.write('\hline' + '\n')
-tex.write('\hline' + '\n')
-tex.write('SUCCESS & '+ ' & '.join(v_SUCCESS) +' \\\\' + '\n')
-tex.write('\hline' + '\n')
-tex.write('SPACE\_EXCEEDED & '+ ' & '.join(v_SPACE_EXCEEDED) +' \\\\' + '\n')
-tex.write('\hline' + '\n')
-tex.write('TIME\_EXCEEDED & '+ ' & '.join(v_TIME_EXCEEDED) +' \\\\' + '\n')
-tex.write('\hline' + '\n')
-tex.write('ABORTION & '+ ' & '.join(v_ABORTION) +' \\\\' + '\n')
-tex.write('\hline' + '\n')
-tex.write('COLLISION & '+ ' & '.join(v_COLLISION) +' \\\\' + '\n')
-tex.write('\hline' + '\n')
-tex.write('\end{tabular}' + '\n')
-tex.write('}' + '\n')
-tex.write('\end{table}' + '\n')
+set = path.split('/')[-1]
+tex = open(path+'/'+set+'.tex','w+')
+tex.write('%% '+set+' results %%\n')
+s_set = re.sub('[_|-]','',set)
+for x in range(0,len(dirs)):
+    s_dir = re.sub('[_|-]','',dirs[x])
+    tex.write('\\newcommand{\\'+ s_set + s_dir + 'S'  +'}{'+ str(v_SUCCESS[x]) +'}\n')
+    tex.write('\\newcommand{\\'+ s_set + s_dir + 'SE' +'}{'+ str(v_SPACE_EXCEEDED[x]) +'}\n')
+    tex.write('\\newcommand{\\'+ s_set + s_dir + 'TE' +'}{'+ str(v_TIME_EXCEEDED[x]) +'}\n')
+    tex.write('\\newcommand{\\'+ s_set + s_dir + 'A'  +'}{'+ str(v_ABORTION[x]) +'}\n')
+    tex.write('\\newcommand{\\'+ s_set + s_dir + 'C'  +'}{'+ str(v_COLLISION[x]) +'}\n')
+    tex.write('\\newcommand{\\'+ s_set + s_dir + 'SC' +'}{'+ str(v_space_mean[x]) +'}\n')
+    tex.write('\\newcommand{\\'+ s_set + s_dir + 'TC' +'}{'+ str(v_time_mean[x]) +'}\n')
+    tex.write('\n')
+# tex.close()
