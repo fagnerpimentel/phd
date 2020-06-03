@@ -26,7 +26,7 @@ docker exec -w $catkin_path -it     $container_name bash -c './install_packages.
 docker exec -w $catkin_path -it     $container_name bash -c 'source /opt/ros/melodic/setup.bash; catkin_make'
 
 docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/I-amcl'
-docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/I-fl'
+docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/II-navfn'
 docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/II-global'
 docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/III-dwa'
 docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/III-eband'

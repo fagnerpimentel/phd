@@ -1,13 +1,16 @@
 # TODO :
 
-* 1 **Texto** - falar sobre a [otimização](https://github.com/zkytony/ROSNavigationGuide/blob/master/main.pdf)
+* 1 **Texto** - **resultados**
+  * pegar dados sobre naturalidade
+  * melhorar gráficos dos resultados
+  * apresentar p-value dos resultados
+  * add resultados sobre contexto (set VI)
 * 1 **Texto** - **Organizar metodologia**
-* 1 **Texto** - **adicionar resultados**
+  * falar sobre a [otimização](https://github.com/zkytony/ROSNavigationGuide/blob/master/main.pdf)
+
 * 1 **Texto** - **adicionar discursão**
 * 1 **Texto** - Refazer referencia bibliografica
 * 1 **Texto** - Organizar introducao
-* 1 **Experimentos** - **otimizar eband**
-* 1 **Experimentos** - **desviar de pequenos objetos**
 * 1 **Experimentos** - preparar ambiente real
 * 1 **Quali** - regras sociais no simulador
 * 1 **Quali** - ontologia
@@ -16,16 +19,12 @@
 * 1 **Quali** - realizar aprendizado com ontologia
   * implemetar o openai nosimulador (treinamento offline e teste)
   * aplicar em ambiente real (treinamento online e teste)
--
-* 2 **Quali** - pegar dados sobre naturalidade
 * 2 **Quali** - preparar questionario para ambiente real
 * 2 **Quali** - percepção? (simulado/real)
 * 2 **Quali** - mapeamento semantico
 * 2 **hera_nav** - explicar como foi otimizado e cada variavel utilizada fora do padrão
 * 2 **hera_nav** - add imagens con diferenças da otimização antes e depois
 -
-* 3 **Experimentos** - melhorar apresentação dos resultados
-* 3 **Experimentos** - apresentar p-value dos resultados
 -
 * 4 **hera_description** - documantar a verificação de colisão
 * 4 **hera_description** - documentar os parametros dos sensores simulados e verificar se são iguais ao real
