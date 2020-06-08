@@ -39,8 +39,6 @@ source $CATKIN_PATH/devel/setup.bash
 params_file=$1
 source $params_file
 max_experiments="10"
-xy_goal_tolerance="0.1"
-yaw_goal_tolerance="3.1415"
 
 ######################################################################
 
@@ -61,8 +59,6 @@ do
   roslaunch social_experiments experiment.launch \
     use_fake_localization:="$use_fake_localization" \
     max_experiments:="$max_experiments" \
-    xy_goal_tolerance:="$xy_goal_tolerance" \
-    yaw_goal_tolerance:="$yaw_goal_tolerance" \
     map_name:="$map_name" \
     global_planner:="$global_planner" \
     local_planner:="$local_planner" \

@@ -1,17 +1,30 @@
 # TODO :
 
 * 1 **Texto** - **resultados**
-  * pegar dados sobre naturalidade
+  * adicionar dados de conforto (implementar no gazebo)
+  * add resultados sobre contexto (set VI)
+  * adicionar discursão
   * melhorar gráficos dos resultados
   * apresentar p-value dos resultados
-  * add resultados sobre contexto (set VI)
+
 * 1 **Texto** - **Organizar metodologia**
   * falar sobre a [otimização](https://github.com/zkytony/ROSNavigationGuide/blob/master/main.pdf)
+  * add os algoritimos usados
+  * pq novos cenarios e naõ usar os antigos? para quebra os itens de avaliação como tipos de objetos e ter mais controle dos resultados. evitar situação onde o ponto destino é do lado do ponto final, e avaliar do forma crescente o grau de dificuldade dos ambientes.
+  * trocar figura do HERA
 
-* 1 **Texto** - **adicionar discursão**
+
+
+
+
+
+
+
+
+* 1 **Experimentos** - preparar ambiente real
+
 * 1 **Texto** - Refazer referencia bibliografica
 * 1 **Texto** - Organizar introducao
-* 1 **Experimentos** - preparar ambiente real
 * 1 **Quali** - regras sociais no simulador
 * 1 **Quali** - ontologia
   * implementar a cora no agente

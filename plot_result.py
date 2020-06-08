@@ -3,10 +3,13 @@ from __future__ import division
 import matplotlib
 matplotlib.use('Agg')
 
+from scipy import stats
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 import numpy as np
+import math
+import json
 import sys
 import os
 import re
@@ -18,11 +21,15 @@ time_factor_tolerance = 5
 dirs = [ name for name in os.listdir(path) if os.path.isdir(os.path.join(path, name)) ]
 
 v_xlabels = []
-
 v_space_mean = []
 v_space_std = []
+# v_space_p_value = []
 v_time_mean = []
 v_time_std = []
+# v_time_p_value = []
+v_smooth_mean = []
+v_smooth_std = []
+# v_smooth_p_value = []
 
 v_SUCCESS = []
 v_SPACE_EXCEEDED = []
@@ -34,26 +41,41 @@ for dir in dirs:
     result=pd.read_csv(path+'/'+dir+'/result.csv')
     max_experiments = result.i.count()
 
+    path_elapsed_x = json.loads(open(path+'/'+dir+'/path_executed_x.json').read())
+    path_elapsed_y = json.loads(open(path+'/'+dir+'/path_executed_y.json').read())
+
     SUCCESS = result.status.tolist().count('SUCCESS') / max_experiments
     SPACE_EXCEEDED = result.status.tolist().count('SPACE_EXCEEDED') / max_experiments
     TIME_EXCEEDED = result.status.tolist().count('TIME_EXCEEDED') / max_experiments
     ABORTION = result.status.tolist().count('ABORTION') / max_experiments
     COLLISION = result.status.tolist().count('COLLISION') / max_experiments
 
-    space_elapsed = np.array(result.space_elapsed.tolist())
     space_min = np.array(result.space_min.tolist())
+    space_elapsed = np.array(result.space_elapsed.tolist())
     time_min = np.array(result.time_min.tolist())
     time_elapsed = np.array(result.time_elapsed.tolist())
 
     space_max = space_factor_tolerance*space_min
-    space_coef = 1-(space_elapsed-space_min)/(space_max-space_min);
+    space_coef = 1-(space_elapsed-space_min)/(space_max-space_min)
 
-    time_max = time_factor_tolerance*time_min;
-    time_coef = 1-(time_elapsed-time_min)/(time_max-time_min);
+    time_max = time_factor_tolerance*time_min
+    time_coef = 1-(time_elapsed-time_min)/(time_max-time_min)
+
+    smooth_coef = []
+    for experiment_id in range(0,max_experiments):
+        values_pex = path_elapsed_x[str(experiment_id)]
+        values_pey = path_elapsed_y[str(experiment_id)]
+        sum = 0
+        n = len(values_pex)
+        for i in range(1,n):
+            sum += np.arctan2(values_pey[i]-values_pey[i-1],values_pex[i]-values_pex[i-1])/math.pi
+        smooth_coef.append(1-(sum/(n-1)))
+
 
     success_indexes = [index for index in range(len(result.status.tolist())) if result.status.tolist()[index] == 'SUCCESS']
     space_coef_success = np.array([space_coef[ind] for ind in success_indexes])
     time_coef_success =  np.array([time_coef[ind] for ind in success_indexes])
+    smooth_coef_success =  np.array([smooth_coef[ind] for ind in success_indexes])
 
 
     v_xlabels.append(dir.replace('_', '\n') + '\n (' + format(SUCCESS*100, '.2f') + '%)')
@@ -62,6 +84,13 @@ for dir in dirs:
     v_space_std.append(space_coef_success.std() if(len(space_coef_success) > 0) else 0)
     v_time_mean.append(time_coef_success.mean() if(len(time_coef_success) > 0) else 0)
     v_time_std.append(time_coef_success.std() if(len(time_coef_success) > 0) else 0)
+    v_smooth_mean.append(smooth_coef_success.mean() if(len(smooth_coef_success) > 0) else 0)
+    v_smooth_std.append(smooth_coef_success.std() if(len(smooth_coef_success) > 0) else 0)
+
+    # s_pv = stats.norm.rvs(loc = v_space_mean[-1],scale = v_space_std[-1],size = max_experiments)
+    # v_space_p_value.append(s_pv)
+    # t_pv = stats.norm.rvs(loc = v_time_mean[-1],scale = v_time_std[-1],size = max_experiments)
+    # v_space_p_value.append(t_pv)
 
     v_SUCCESS.append(SUCCESS)
     v_SPACE_EXCEEDED.append(SPACE_EXCEEDED)
@@ -128,16 +157,23 @@ plt.savefig(path+'/all.png')
 # generate latex
 set = path.split('/')[-1]
 tex = open(path+'/'+set+'.tex','w+')
-tex.write('%% '+set+' results %%\n')
 s_set = re.sub('[_|-]','',set)
 for x in range(0,len(dirs)):
     s_dir = re.sub('[_|-]','',dirs[x])
+    tex.write('%% '+set+' - '+ dirs[x] +' %%\n')
     tex.write('\\newcommand{\\'+ s_set + s_dir + 'S'  +'}{'+ str(v_SUCCESS[x]) +'}\n')
     tex.write('\\newcommand{\\'+ s_set + s_dir + 'SE' +'}{'+ str(v_SPACE_EXCEEDED[x]) +'}\n')
     tex.write('\\newcommand{\\'+ s_set + s_dir + 'TE' +'}{'+ str(v_TIME_EXCEEDED[x]) +'}\n')
     tex.write('\\newcommand{\\'+ s_set + s_dir + 'A'  +'}{'+ str(v_ABORTION[x]) +'}\n')
     tex.write('\\newcommand{\\'+ s_set + s_dir + 'C'  +'}{'+ str(v_COLLISION[x]) +'}\n')
-    tex.write('\\newcommand{\\'+ s_set + s_dir + 'SC' +'}{'+ str(v_space_mean[x]) +'}\n')
-    tex.write('\\newcommand{\\'+ s_set + s_dir + 'TC' +'}{'+ str(v_time_mean[x]) +'}\n')
+    tex.write('\\newcommand{\\'+ s_set + s_dir + 'SCm' +'}{'+ str(v_space_mean[x]) +'}\n')
+    tex.write('\\newcommand{\\'+ s_set + s_dir + 'SCs' +'}{'+ str(v_space_std[x]) +'}\n')
+    # tex.write('\\newcommand{\\'+ s_set + s_dir + 'SCp' +'}{'+ str(v_space_p_value[x]) +'}\n')
+    tex.write('\\newcommand{\\'+ s_set + s_dir + 'TCm' +'}{'+ str(v_time_mean[x]) +'}\n')
+    tex.write('\\newcommand{\\'+ s_set + s_dir + 'TCs' +'}{'+ str(v_time_std[x]) +'}\n')
+    # tex.write('\\newcommand{\\'+ s_set + s_dir + 'TCp' +'}{'+ str(v_time_p_value[x]) +'}\n')
+    tex.write('\\newcommand{\\'+ s_set + s_dir + 'SCm' +'}{'+ str(v_smooth_mean[x]) +'}\n')
+    tex.write('\\newcommand{\\'+ s_set + s_dir + 'SCs' +'}{'+ str(v_smooth_std[x]) +'}\n')
+    # tex.write('\\newcommand{\\'+ s_set + s_dir + 'SCp' +'}{'+ str(v_smooth_p_value[x]) +'}\n')
     tex.write('\n')
 # tex.close()
