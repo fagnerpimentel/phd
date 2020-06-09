@@ -30,6 +30,9 @@ v_time_std = []
 v_smooth_mean = []
 v_smooth_std = []
 # v_smooth_p_value = []
+v_proxemics_mean = []
+v_proxemics_std = []
+# v_proxemics_p_value = []
 
 v_SUCCESS = []
 v_SPACE_EXCEEDED = []
@@ -43,6 +46,7 @@ for dir in dirs:
 
     path_elapsed_x = json.loads(open(path+'/'+dir+'/path_executed_x.json').read())
     path_elapsed_y = json.loads(open(path+'/'+dir+'/path_executed_y.json').read())
+    people = json.loads(open(path+'/'+dir+'/people.json').read())
 
     SUCCESS = result.status.tolist().count('SUCCESS') / max_experiments
     SPACE_EXCEEDED = result.status.tolist().count('SPACE_EXCEEDED') / max_experiments
@@ -62,20 +66,43 @@ for dir in dirs:
     time_coef = 1-(time_elapsed-time_min)/(time_max-time_min)
 
     smooth_coef = []
+    proxemics_coef = []
+    # print(max_experiments)
     for experiment_id in range(0,max_experiments):
         values_pex = path_elapsed_x[str(experiment_id)]
         values_pey = path_elapsed_y[str(experiment_id)]
-        sum = 0
+        values_p   = people[str(experiment_id)]
+        smooth_sum = 0
+        proxemic_sum = 0
         n = len(values_pex)
+        # print(n)
         for i in range(1,n):
-            sum += np.arctan2(values_pey[i]-values_pey[i-1],values_pex[i]-values_pex[i-1])/math.pi
-        smooth_coef.append(1-(sum/(n-1)))
+            # print(str(len(values_p[i])))
+            proxemic_value = 0
+            n2 = len(values_p[i])
+            for i2 in range(0,n2):
+                value_px = values_p[i][i2][0]
+                value_py = values_p[i][i2][1]
+                d = math.sqrt(
+                    (pow(value_px - values_pex[i] ,2)) +
+                    (pow(value_py - values_pey[i] ,2)) )
+                if(d < 1):
+                    proxemic_value += d
+                else:
+                    proxemic_value += 1
 
+                proxemic_value = proxemic_value/n2
+
+            smooth_sum += np.arctan2(values_pey[i]-values_pey[i-1],values_pex[i]-values_pex[i-1])/math.pi
+            proxemic_sum += proxemic_value
+        smooth_coef.append(1-(smooth_sum/(n-1)))
+        proxemics_coef.append(1-(proxemic_sum/(n-1)))
 
     success_indexes = [index for index in range(len(result.status.tolist())) if result.status.tolist()[index] == 'SUCCESS']
     space_coef_success = np.array([space_coef[ind] for ind in success_indexes])
     time_coef_success =  np.array([time_coef[ind] for ind in success_indexes])
     smooth_coef_success =  np.array([smooth_coef[ind] for ind in success_indexes])
+    proxemics_coef_success =  np.array([proxemics_coef[ind] for ind in success_indexes])
 
 
     v_xlabels.append(dir.replace('_', '\n') + '\n (' + format(SUCCESS*100, '.2f') + '%)')
@@ -86,6 +113,8 @@ for dir in dirs:
     v_time_std.append(time_coef_success.std() if(len(time_coef_success) > 0) else 0)
     v_smooth_mean.append(smooth_coef_success.mean() if(len(smooth_coef_success) > 0) else 0)
     v_smooth_std.append(smooth_coef_success.std() if(len(smooth_coef_success) > 0) else 0)
+    v_proxemics_mean.append(proxemics_coef_success.mean() if(len(proxemics_coef_success) > 0) else 0)
+    v_proxemics_std.append(proxemics_coef_success.std() if(len(proxemics_coef_success) > 0) else 0)
 
     # s_pv = stats.norm.rvs(loc = v_space_mean[-1],scale = v_space_std[-1],size = max_experiments)
     # v_space_p_value.append(s_pv)
@@ -172,8 +201,11 @@ for x in range(0,len(dirs)):
     tex.write('\\newcommand{\\'+ s_set + s_dir + 'TCm' +'}{'+ str(v_time_mean[x]) +'}\n')
     tex.write('\\newcommand{\\'+ s_set + s_dir + 'TCs' +'}{'+ str(v_time_std[x]) +'}\n')
     # tex.write('\\newcommand{\\'+ s_set + s_dir + 'TCp' +'}{'+ str(v_time_p_value[x]) +'}\n')
-    tex.write('\\newcommand{\\'+ s_set + s_dir + 'SCm' +'}{'+ str(v_smooth_mean[x]) +'}\n')
-    tex.write('\\newcommand{\\'+ s_set + s_dir + 'SCs' +'}{'+ str(v_smooth_std[x]) +'}\n')
+    tex.write('\\newcommand{\\'+ s_set + s_dir + 'NCm' +'}{'+ str(v_smooth_mean[x]) +'}\n')
+    tex.write('\\newcommand{\\'+ s_set + s_dir + 'NCs' +'}{'+ str(v_smooth_std[x]) +'}\n')
     # tex.write('\\newcommand{\\'+ s_set + s_dir + 'SCp' +'}{'+ str(v_smooth_p_value[x]) +'}\n')
+    tex.write('\\newcommand{\\'+ s_set + s_dir + 'PCm' +'}{'+ str(v_proxemics_mean[x]) +'}\n')
+    tex.write('\\newcommand{\\'+ s_set + s_dir + 'PCs' +'}{'+ str(v_proxemics_std[x]) +'}\n')
+    # tex.write('\\newcommand{\\'+ s_set + s_dir + 'PCp' +'}{'+ str(v_proxemics_p_value[x]) +'}\n')
     tex.write('\n')
 # tex.close()

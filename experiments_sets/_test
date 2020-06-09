@@ -2,11 +2,11 @@ use_fake_localization="true"
 global_planner="global_planner/GlobalPlanner"
 local_planner="base_local_planner/TrajectoryPlannerROS"
 global_layers="[ {name: static_layer, type: 'costmap_2d::StaticLayer'}, {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}, {name: proxemic_layer, type: 'social_navigation_layers::ProxemicLayer'}]"
-local_layers="[ {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}]"
+local_layers="[ {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}, {name: proxemic_layer, type: 'social_navigation_layers::ProxemicLayer'}]"
 observation_sources="laser_scan_front_observation laser_scan_back_observation point_cloud_base_front_observation point_cloud_torso_front_observation"
 
 declare -A worlds
-worlds["sr"]="simple_room"
+ worlds["sr"]="simple_room"
 # worlds["sr_b"]="simple_room__boxes"
 # worlds["sr_nc"]="simple_room__narrow_corridors"
 # worlds["sr_bs"]="simple_room__boxes_small"
