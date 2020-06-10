@@ -38,7 +38,7 @@ source $CATKIN_PATH/devel/setup.bash
 
 params_file=$1
 source $params_file
-max_experiments="10"
+max_experiments="1000"
 
 ######################################################################
 
