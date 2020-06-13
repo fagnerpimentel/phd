@@ -17,9 +17,9 @@ git clone https://github.com/DLu/navigation_layers.git
 
 cd hera_description   ; git checkout -q 9178e6eef807f61e03cb64cc4e13f6a77fbb8b8f ; cd ..
 cd hera_nav           ; git checkout -q a0cbf09bbd513424bd55947788160a191afb80fe ; cd ..
-cd hera_bringup       ; git checkout -q 6c386c6ece86ef6e8f8554e38f862c3e27fa1aaf ; cd ..
-cd social_worlds      ; git checkout -q 11d091fe4c4d6229bcff1f01d3ba3f5cd7c3fb5b ; cd ..
-cd social_experiments ; git checkout -q 397977efecd31e2a60d8d842b157c5ec477186af ; cd ..
+cd hera_bringup       ; git checkout -q 50319705d2968de54ab674eea3a49576d55c419f ; cd ..
+cd social_worlds      ; git checkout -q c7d4cd54a9b382e4e1a05c906a70ef647ff7831c ; cd ..
+cd social_experiments ; git checkout -q efcf29311420a56b9270ccd5e34c750b80d8d302 ; cd ..
 
 apt-get update
 ./hera_description/install_dependencies.sh
