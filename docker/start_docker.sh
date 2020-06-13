@@ -35,7 +35,7 @@ docker exec -w $catkin_path -it     $container_name bash -c './start_experiments
 docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/IV-four'
 docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/V-common'
 docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/V-social'
-# docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/VI'
+docker exec -w $catkin_path -it     $container_name bash -c './start_experiments.sh experiments_sets/VI-interaction'
 
 docker cp $container_name:$result_path $HOME/result_$container_name
 
