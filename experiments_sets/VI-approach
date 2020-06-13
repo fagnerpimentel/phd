@@ -6,4 +6,8 @@ local_layers="[ {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: 
 observation_sources="laser_scan_front_observation laser_scan_back_observation point_cloud_base_front_observation point_cloud_torso_front_observation"
 
 declare -A worlds
-worlds["sr_fei"]="simple_room__fei_k5"
+worlds["feik_o"]="fei_k5__one"
+worlds["feik_two"]="fei_k5__two_open"
+worlds["feik_twc"]="fei_k5__two_close"
+worlds["feik_tho"]="fei_k5__three_open"
+worlds["feik_thc"]="fei_k5__three_close"

@@ -52,7 +52,11 @@
 * 4 **Todos os pacotes** - dar exemplos dos usos dos pacotes
 * 4 **Todos os pacotes** - Atualizar documentação
 -
+
+* 5 **Experimentos** - adicionar população
 * 5 **Experimentos** - interface gráfica
+* 5 **Experimentos** - preparar ambiente para comportamento de aproximação
+
 * 5 **hera_description** - rethink the design - see another robots)
 * 5 **hera_description** - update sizes and weights
 * 5 **hera_description** - remove magical numbers
