@@ -1,4 +1,4 @@
-use_fake_localization="true"
+use_amcl="false"
 global_planner="global_planner/GlobalPlanner"
 local_planner="teb_local_planner/TebLocalPlannerROS"
 global_layers="[ {name: static_layer, type: 'costmap_2d::StaticLayer'}, {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}]"
@@ -8,4 +8,5 @@ observation_sources="laser_scan_front_observation laser_scan_back_observation po
 declare -A worlds
 worlds["sr_sp"]="simple_room__static_people"
 worlds["sr_dp"]="simple_room__dynamic_people"
-worlds["sr_ii"]="simple_room__mix_2"
+worlds["sr_io"]="simple_room__interaction_object"
+worlds["sr_ih"]="simple_room__interaction_people"

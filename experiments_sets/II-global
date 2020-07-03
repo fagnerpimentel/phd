@@ -1,4 +1,4 @@
-use_fake_localization="true"
+use_amcl="false"
 global_planner="global_planner/GlobalPlanner"
 local_planner="base_local_planner/TrajectoryPlannerROS"
 global_layers="[ {name: static_layer, type: 'costmap_2d::StaticLayer'}, {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}]"
