@@ -38,7 +38,7 @@ source $CATKIN_PATH/devel/setup.bash
 
 params_file=$1
 source $params_file
-max_experiments="1000"
+max_experiments="2"
 
 ######################################################################
 
@@ -57,7 +57,7 @@ do
 
   export ROS_LOG_DIR=$path_storage/log
   roslaunch social_experiments experiment.launch \
-    use_fake_localization:="$use_fake_localization" \
+    use_amcl:="$use_amcl" \
     max_experiments:="$max_experiments" \
     map_name:="$map_name" \
     global_planner:="$global_planner" \

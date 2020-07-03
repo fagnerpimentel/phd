@@ -39,6 +39,7 @@ v_SPACE_EXCEEDED = []
 v_TIME_EXCEEDED = []
 v_ABORTION = []
 v_COLLISION = []
+v_INVASION = []
 
 for dir in dirs:
     result=pd.read_csv(path+'/'+dir+'/result.csv')
@@ -53,6 +54,7 @@ for dir in dirs:
     TIME_EXCEEDED = result.status.tolist().count('TIME_EXCEEDED') / max_experiments
     ABORTION = result.status.tolist().count('ABORTION') / max_experiments
     COLLISION = result.status.tolist().count('COLLISION') / max_experiments
+    INVASION = result.status.tolist().count('INVASION') / max_experiments
 
     space_min = np.array(result.space_min.tolist())
     space_elapsed = np.array(result.space_elapsed.tolist())
@@ -126,12 +128,14 @@ for dir in dirs:
     v_TIME_EXCEEDED.append(TIME_EXCEEDED)
     v_ABORTION.append(ABORTION)
     v_COLLISION.append(COLLISION)
+    v_INVASION.append(INVASION)
 
     result = result.replace('SUCCESS', 'SUCCESS:              ' + format(SUCCESS*100, '.2f') + '%')
     result = result.replace('SPACE_EXCEEDED', 'SPACE_EXCEEDED:' + format(SPACE_EXCEEDED*100, '.2f') + '%')
     result = result.replace('TIME_EXCEEDED', 'TIME_EXCEEDED:  ' + format(TIME_EXCEEDED*100, '.2f') + '%')
     result = result.replace('ABORTION', 'ABORTION:            ' + format(ABORTION*100, '.2f') + '%')
     result = result.replace('COLLISION', 'COLLISION:          ' + format(COLLISION*100, '.2f') + '%')
+    result = result.replace('INVASION', 'INVASION:            ' + format(INVASION*100, '.2f') + '%')
 
     sns.set(style="whitegrid")
     # plt.suptitle('Accuracy: ' + str(SUCCESS) + '%')
@@ -195,6 +199,7 @@ for x in range(0,len(dirs)):
     tex.write('\\newcommand{\\'+ s_set + s_dir + 'TE' +'}{'+ str(v_TIME_EXCEEDED[x]) +'}\n')
     tex.write('\\newcommand{\\'+ s_set + s_dir + 'A'  +'}{'+ str(v_ABORTION[x]) +'}\n')
     tex.write('\\newcommand{\\'+ s_set + s_dir + 'C'  +'}{'+ str(v_COLLISION[x]) +'}\n')
+    tex.write('\\newcommand{\\'+ s_set + s_dir + 'I'  +'}{'+ str(v_INVASION[x]) +'}\n')
     tex.write('\\newcommand{\\'+ s_set + s_dir + 'SCm' +'}{'+ str(v_space_mean[x]) +'}\n')
     tex.write('\\newcommand{\\'+ s_set + s_dir + 'SCs' +'}{'+ str(v_space_std[x]) +'}\n')
     # tex.write('\\newcommand{\\'+ s_set + s_dir + 'SCp' +'}{'+ str(v_space_p_value[x]) +'}\n')
