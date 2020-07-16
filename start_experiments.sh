@@ -38,7 +38,7 @@ source $CATKIN_PATH/devel/setup.bash
 
 params_file=$1
 source $params_file
-max_experiments="2"
+max_experiments="3"
 
 ######################################################################
 
@@ -48,7 +48,10 @@ mkdir -p $path/
 for world in ${!worlds[@]};
 do
 
-  map_name=${worlds[${world}]}
+  map_params=(${worlds[${world}]})
+
+  world_name=${map_params[0]}${map_params[1]}
+  map_name=${map_params[0]}
 
   path_storage=$path/$world
 
@@ -59,6 +62,7 @@ do
   roslaunch social_experiments experiment.launch \
     use_amcl:="$use_amcl" \
     max_experiments:="$max_experiments" \
+    world_name:="$world_name" \
     map_name:="$map_name" \
     global_planner:="$global_planner" \
     local_planner:="$local_planner" \
