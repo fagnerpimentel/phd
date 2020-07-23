@@ -76,7 +76,7 @@ for dir in dirs:
         values_p   = people[str(experiment_id)]
         smooth_sum = 0
         proxemic_sum = 0
-        n = len(values_pex)
+        n = len(values_p)
         # print(n)
         for i in range(1,n):
             # print(str(len(values_p[i])))
