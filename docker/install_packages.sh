@@ -16,10 +16,10 @@ git clone https://github.com/Social-Droids/social_experiments.git
 git clone https://github.com/DLu/navigation_layers.git
 
 cd hera_description   ; git checkout -q 9178e6eef807f61e03cb64cc4e13f6a77fbb8b8f ; cd ..
-cd hera_nav           ; git checkout -q bea1e30a78cce8ce3c8284ef5ee676cc10c928f2 ; cd ..
-cd hera_bringup       ; git checkout -q b294e08f0f8eb146351e81698b07d3324897e47d ; cd ..
-cd social_worlds      ; git checkout -q b3de197678a95bf62f780ad70a3a77c3cd5cab1b ; cd ..
-cd social_experiments ; git checkout -q 1794b82068dcdc091fe3bad3e2bf13a3ace8f5e3 ; cd ..
+cd hera_nav           ; git checkout -q c9ca3fc4a9625ab402a370898bec6332b09f7d3f ; cd ..
+cd hera_bringup       ; git checkout -q 83670467485f8acb1062de0bfab44589db42c6ba ; cd ..
+cd social_worlds      ; git checkout -q b9b477c67b8335c9e3adb808ea44916fbbd5c50b ; cd ..
+cd social_experiments ; git checkout -q ca81e2ff09dfbd8f8c31a1e778fc62022f3b25f0 ; cd ..
 
 apt-get update
 ./hera_description/install_dependencies.sh
