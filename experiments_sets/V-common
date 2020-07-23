@@ -6,7 +6,7 @@ local_layers="[ {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: 
 observation_sources="laser_scan_front_observation laser_scan_back_observation point_cloud_base_front_observation point_cloud_torso_front_observation"
 
 declare -A worlds
-worlds["sr_sp"]="simple_room__static_people"
-worlds["sr_dp"]="simple_room__dynamic_people"
-worlds["sr_io"]="simple_room__interaction_object"
-worlds["sr_ih"]="simple_room__interaction_people"
+worlds["sr_sp"]="simple_room __static_people"
+worlds["sr_dp"]="simple_room __dynamic_people"
+worlds["sr_io"]="simple_room __interaction_object"
+worlds["sr_ih"]="simple_room __interaction_people"

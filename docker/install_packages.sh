@@ -25,6 +25,7 @@ apt-get update
 ./hera_description/install_dependencies.sh
 ./hera_nav/install_dependencies.sh
 ./hera_bringup/install_dependencies.sh
+./social_worlds/install_dependencies.sh
 
 apt-get install -y iproute2
 apt-get install -y python3-pip

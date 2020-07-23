@@ -7,5 +7,5 @@ observation_sources="laser_scan_front_observation laser_scan_back_observation po
 
 declare -A worlds
 worlds["sr"]="simple_room"
-worlds["sr_b"]="simple_room__boxes"
-worlds["sr_nc"]="simple_room__narrow_corridors"
+worlds["sr_b"]="simple_room __boxes"
+worlds["sr_nc"]="simple_room __narrow_corridors"
