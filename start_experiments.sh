@@ -38,7 +38,7 @@ source $CATKIN_PATH/devel/setup.bash
 
 params_file=$1
 source $params_file
-max_experiments="10"
+max_experiments="1"
 
 ######################################################################
 
@@ -72,11 +72,12 @@ do
     path_storage:="$path_storage"
   unset ROS_LOG_DIR
 
+  cp `rospack find hera_bringup`/resources/map/"$world_name"/map.pgm $path_storage
+
 done
 
 unset ROS_MASTER_URI
 unset ROS_IP
 
-cp `rospack find hera_bringup`/resources/map/simple_room/map.pgm $path
 python3 plot_result.py $path
 python3 plot_maps.py $path

@@ -48,7 +48,7 @@ for dir in dirs:
 
 ################################################################################
 
-    img = mpimg.imread(path+'/map.pgm')
+    img = mpimg.imread(path+'/'+dir+'/map.pgm')
     img = np.flipud(img.T)
 
     robot_vel = params['robot_vel']
@@ -96,9 +96,10 @@ for dir in dirs:
             except Exception as e:
                 print (e)
 
-        img=img[int(a/2-150):int(a/2+150), int(b/2-150):int(b/2+150)]
-        path_min=path_min[int(a/2-150):int(a/2+150), int(b/2-150):int(b/2+150)]
-        path_elapsed=path_elapsed[int(a/2-150):int(a/2+150), int(b/2-150):int(b/2+150)]
+        factor = 1000
+        img=img[int(a/2-factor):int(a/2+factor), int(b/2-factor):int(b/2+factor)]
+        path_min=path_min[int(a/2-factor):int(a/2+factor), int(b/2-factor):int(b/2+factor)]
+        path_elapsed=path_elapsed[int(a/2-factor):int(a/2+factor), int(b/2-factor):int(b/2+factor)]
 
         #######################################################
 

@@ -21,4 +21,6 @@ worlds["sr_dp"]="simple_room __dynamic_people"
 worlds["sr_ih"]="simple_room __interaction_people"
 worlds["sr_io"]="simple_room __interaction_object"
 
-# worlds["fk5_mi"]="fei_k5 __marathon_1"
+worlds["fk5_mi"]="fei_k5 __marathon_1"
+worlds["fk5_mii"]="fei_k5 __marathon_2"
+worlds["fk5_miii"]="fei_k5 __marathon_3"
