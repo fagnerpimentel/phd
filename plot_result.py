@@ -3,6 +3,7 @@ from __future__ import division
 import matplotlib
 matplotlib.use('Agg')
 
+import operator
 from scipy import stats
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -42,6 +43,8 @@ v_COLLISION = []
 v_INVASION = []
 
 for dir in dirs:
+    print(dir)
+
     result=pd.read_csv(path+'/'+dir+'/result.csv')
     max_experiments = result.i.count()
 
@@ -69,54 +72,66 @@ for dir in dirs:
 
     smooth_coef = []
     proxemics_coef = []
-    # print(max_experiments)
+
+    smooth_coef = []
+    proxemics_coef = []
     for experiment_id in range(0,max_experiments):
+
         values_pex = path_elapsed_x[str(experiment_id)]
         values_pey = path_elapsed_y[str(experiment_id)]
-        values_p   = people[str(experiment_id)]
         smooth_sum = 0
+        n = len(values_pex)
+        for i in range(1,n):
+            smooth = abs(np.arctan2(values_pey[i]-values_pey[i-1],
+                                values_pex[i]-values_pex[i-1]))/(math.pi)
+            smooth_sum += smooth
+        smooth_coef.append(1-(smooth_sum/(n-1)))
+
+        values_p   = people[str(experiment_id)]
         proxemic_sum = 0
         n = len(values_p)
-        # print(n)
+        nn = n
         for i in range(1,n):
-            # print(str(len(values_p[i])))
             proxemic_value = 0
             n2 = len(values_p[i])
+            dist_list = []
             for i2 in range(0,n2):
                 value_px = values_p[i][i2][0]
                 value_py = values_p[i][i2][1]
                 d = math.sqrt(
                     (pow(value_px - values_pex[i] ,2)) +
                     (pow(value_py - values_pey[i] ,2)) )
-                if(d < 1):
-                    proxemic_value += d
-                else:
-                    proxemic_value += 1
+                dist_list.append(d)
 
-                proxemic_value = proxemic_value/n2
+            if(len(dist_list) == 0):
+                proxemic_value = 1
+            elif(min(dist_list) <= 1.2):
+                proxemic_value = min(dist_list)/1.2
+            else:
+                proxemic_value = 0
+                nn -= 1
 
-            smooth_sum += np.arctan2(values_pey[i]-values_pey[i-1],values_pex[i]-values_pex[i-1])/math.pi
             proxemic_sum += proxemic_value
-        smooth_coef.append(1-(smooth_sum/(n-1)))
-        proxemics_coef.append(1-(proxemic_sum/(n-1)))
+        proxemics_coef.append((proxemic_sum/nn))
 
-    success_indexes = [index for index in range(len(result.status.tolist())) if result.status.tolist()[index] == 'SUCCESS']
-    space_coef_success = np.array([space_coef[ind] for ind in success_indexes])
-    time_coef_success =  np.array([time_coef[ind] for ind in success_indexes])
-    smooth_coef_success =  np.array([smooth_coef[ind] for ind in success_indexes])
-    proxemics_coef_success =  np.array([proxemics_coef[ind] for ind in success_indexes])
-
+    # success_indexes = [index for index in range(len(result.status.tolist())) if result.status.tolist()[index] == 'SUCCESS']
+    success_arr = np.array(result.status.tolist())
+    success_indexes = np.where(success_arr == 'SUCCESS')[0]
+    space_coef_success = np.array(operator.itemgetter(*success_indexes)(space_coef))
+    time_coef_success = np.array(operator.itemgetter(*success_indexes)(time_coef))
+    smooth_coef_success = np.array(operator.itemgetter(*success_indexes)(smooth_coef))
+    proxemics_coef_success = np.array(operator.itemgetter(*success_indexes)(proxemics_coef))
 
     v_xlabels.append(dir.replace('_', '\n') + '\n (' + format(SUCCESS*100, '.2f') + '%)')
 
-    v_space_mean.append(space_coef_success.mean() if(len(space_coef_success) > 0) else 0)
-    v_space_std.append(space_coef_success.std() if(len(space_coef_success) > 0) else 0)
-    v_time_mean.append(time_coef_success.mean() if(len(time_coef_success) > 0) else 0)
-    v_time_std.append(time_coef_success.std() if(len(time_coef_success) > 0) else 0)
-    v_smooth_mean.append(smooth_coef_success.mean() if(len(smooth_coef_success) > 0) else 0)
-    v_smooth_std.append(smooth_coef_success.std() if(len(smooth_coef_success) > 0) else 0)
-    v_proxemics_mean.append(proxemics_coef_success.mean() if(len(proxemics_coef_success) > 0) else 0)
-    v_proxemics_std.append(proxemics_coef_success.std() if(len(proxemics_coef_success) > 0) else 0)
+    v_space_mean.append(space_coef_success.mean() if(space_coef_success.size > 0) else 0)
+    v_space_std.append(space_coef_success.std() if(space_coef_success.size > 0) else 0)
+    v_time_mean.append(time_coef_success.mean() if(time_coef_success.size > 0) else 0)
+    v_time_std.append(time_coef_success.std() if(time_coef_success.size > 0) else 0)
+    v_smooth_mean.append(smooth_coef_success.mean() if(smooth_coef_success.size > 0) else 0)
+    v_smooth_std.append(smooth_coef_success.std() if(smooth_coef_success.size > 0) else 0)
+    v_proxemics_mean.append(proxemics_coef_success.mean() if(proxemics_coef_success.size > 0) else 0)
+    v_proxemics_std.append(proxemics_coef_success.std() if(proxemics_coef_success.size > 0) else 0)
 
     # s_pv = stats.norm.rvs(loc = v_space_mean[-1],scale = v_space_std[-1],size = max_experiments)
     # v_space_p_value.append(s_pv)
@@ -137,30 +152,30 @@ for dir in dirs:
     result = result.replace('COLLISION', 'COLLISION:          ' + format(COLLISION*100, '.2f') + '%')
     result = result.replace('INVASION', 'INVASION:            ' + format(INVASION*100, '.2f') + '%')
 
-    sns.set(style="whitegrid")
-    # plt.suptitle('Accuracy: ' + str(SUCCESS) + '%')
-
-    ax0 = plt.subplot(2, 1, 1)
-    plt.ylim(-0.05, 1.2)
-    sns.swarmplot(x=result.i, y=time_coef, hue='status', data=result)
-    t_mean = time_coef_success.mean() if(len(time_coef_success) > 0) else 0
-    sns.lineplot(x=result.i, y=t_mean, dashes=True)
-    ax0.set(ylabel='Time coeficience')
-    ax0.set(xlabel='')
-    ax0.get_legend().remove()
-    ax0.set(xticklabels=[])
-
-    ax1 = plt.subplot(2, 1, 2)
-    plt.ylim(-0.05, 1.2)
-    sns.swarmplot(x=result.i, y=space_coef, hue='status', data=result)
-    s_mean = space_coef_success.mean() if(len(space_coef_success) > 0) else 0
-    sns.lineplot(x=result.i, y=s_mean, linestyle='--')
-    ax1.set(ylabel='Space coeficience')
-    ax1.set(xlabel='Experiment ID')
-    plt.legend(loc='lower center')
-
-    plt.savefig(path+'/'+dir+'/result.png')
-    plt.close()
+    # sns.set(style="whitegrid")
+    # # plt.suptitle('Accuracy: ' + str(SUCCESS) + '%')
+    #
+    # ax0 = plt.subplot(2, 1, 1)
+    # plt.ylim(-0.05, 1.2)
+    # sns.swarmplot(x=result.i, y=time_coef, hue='status', data=result)
+    # t_mean = time_coef_success.mean() if(len(time_coef_success) > 0) else 0
+    # sns.lineplot(x=result.i, y=t_mean, dashes=True)
+    # ax0.set(ylabel='Time coeficience')
+    # ax0.set(xlabel='')
+    # ax0.get_legend().remove()
+    # ax0.set(xticklabels=[])
+    #
+    # ax1 = plt.subplot(2, 1, 2)
+    # plt.ylim(-0.05, 1.2)
+    # sns.swarmplot(x=result.i, y=space_coef, hue='status', data=result)
+    # s_mean = space_coef_success.mean() if(len(space_coef_success) > 0) else 0
+    # sns.lineplot(x=result.i, y=s_mean, linestyle='--')
+    # ax1.set(ylabel='Space coeficience')
+    # ax1.set(xlabel='Experiment ID')
+    # plt.legend(loc='lower center')
+    #
+    # plt.savefig(path+'/'+dir+'/result.png')
+    # plt.close()
 
 
 ax0 = plt.subplot(2, 1, 1)
