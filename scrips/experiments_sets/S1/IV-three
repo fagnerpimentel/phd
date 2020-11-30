@@ -1,11 +1,12 @@
+enable_render="false"
 use_amcl="false"
 global_planner="global_planner/GlobalPlanner"
-local_planner="eband_local_planner/EBandPlannerROS"
+local_planner="teb_local_planner/TebLocalPlannerROS"
 global_layers="[ {name: static_layer, type: 'costmap_2d::StaticLayer'}, {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}]"
 local_layers="[ {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}]"
 observation_sources="laser_scan_front_observation laser_scan_back_observation point_cloud_base_front_observation"
 
 declare -A worlds
-worlds["sr"]="simple_room"
-worlds["sr_b"]="simple_room __boxes"
-worlds["sr_nc"]="simple_room __narrow_corridors"
+worlds["sr_t"]="simple_room __tables"
+worlds["sr_bs"]="simple_room __boxes_small"
+worlds["sr_i"]="simple_room __mix_1"

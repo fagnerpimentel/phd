@@ -52,12 +52,12 @@ for dir in dirs:
     path_elapsed_y = json.loads(open(path+'/'+dir+'/path_executed_y.json').read())
     people = json.loads(open(path+'/'+dir+'/people.json').read())
 
-    SUCCESS = result.status.tolist().count('SUCCESS') / max_experiments
-    SPACE_EXCEEDED = result.status.tolist().count('SPACE_EXCEEDED') / max_experiments
-    TIME_EXCEEDED = result.status.tolist().count('TIME_EXCEEDED') / max_experiments
-    ABORTION = result.status.tolist().count('ABORTION') / max_experiments
-    COLLISION = result.status.tolist().count('COLLISION') / max_experiments
-    INVASION = result.status.tolist().count('INVASION') / max_experiments
+    SUCCESS = result.state.tolist().count('SUCCESS') / max_experiments
+    SPACE_EXCEEDED = result.state.tolist().count('SPACE_EXCEEDED') / max_experiments
+    TIME_EXCEEDED = result.state.tolist().count('TIME_EXCEEDED') / max_experiments
+    ABORTION = result.state.tolist().count('ABORTION') / max_experiments
+    COLLISION = result.state.tolist().count('COLLISION') / max_experiments
+    INVASION = result.state.tolist().count('INVASION') / max_experiments
 
     space_min = np.array(result.space_min.tolist())
     space_elapsed = np.array(result.space_elapsed.tolist())
@@ -69,9 +69,6 @@ for dir in dirs:
 
     time_max = time_factor_tolerance*time_min
     time_coef = 1-(time_elapsed-time_min)/(time_max-time_min)
-
-    smooth_coef = []
-    proxemics_coef = []
 
     smooth_coef = []
     proxemics_coef = []
@@ -106,7 +103,9 @@ for dir in dirs:
             if(len(dist_list) == 0):
                 proxemic_value = 1
             elif(min(dist_list) <= 1.2):
-                proxemic_value = min(dist_list)/1.2
+                proxemic_value = pow(1.8,min(dist_list))-1
+            elif(min(dist_list) <= 3.7):
+                proxemic_value = 1
             else:
                 proxemic_value = 0
                 nn -= 1
@@ -114,8 +113,8 @@ for dir in dirs:
             proxemic_sum += proxemic_value
         proxemics_coef.append((proxemic_sum/nn))
 
-    # success_indexes = [index for index in range(len(result.status.tolist())) if result.status.tolist()[index] == 'SUCCESS']
-    success_arr = np.array(result.status.tolist())
+    # success_indexes = [index for index in range(len(result..tolist())) if result.state.tolist()[index] == 'SUCCESS']
+    success_arr = np.array(result.state.tolist())
     success_indexes = np.where(success_arr == 'SUCCESS')[0]
     space_coef_success = np.array(operator.itemgetter(*success_indexes)(space_coef))
     time_coef_success = np.array(operator.itemgetter(*success_indexes)(time_coef))
@@ -157,7 +156,7 @@ for dir in dirs:
     #
     # ax0 = plt.subplot(2, 1, 1)
     # plt.ylim(-0.05, 1.2)
-    # sns.swarmplot(x=result.i, y=time_coef, hue='status', data=result)
+    # sns.swarmplot(x=result.i, y=time_coef, hue='state', data=result)
     # t_mean = time_coef_success.mean() if(len(time_coef_success) > 0) else 0
     # sns.lineplot(x=result.i, y=t_mean, dashes=True)
     # ax0.set(ylabel='Time coeficience')
@@ -167,7 +166,7 @@ for dir in dirs:
     #
     # ax1 = plt.subplot(2, 1, 2)
     # plt.ylim(-0.05, 1.2)
-    # sns.swarmplot(x=result.i, y=space_coef, hue='status', data=result)
+    # sns.swarmplot(x=result.i, y=space_coef, hue='state', data=result)
     # s_mean = space_coef_success.mean() if(len(space_coef_success) > 0) else 0
     # sns.lineplot(x=result.i, y=s_mean, linestyle='--')
     # ax1.set(ylabel='Space coeficience')

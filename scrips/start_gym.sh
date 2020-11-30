@@ -38,7 +38,7 @@ source $CATKIN_PATH/devel/setup.bash
 
 params_file=$1
 source $params_file
-max_experiments="1"
+max_experiments="2"
 
 ######################################################################
 
@@ -59,7 +59,7 @@ do
   mkdir $path_storage
 
   export ROS_LOG_DIR=$path_storage/log
-  roslaunch social_experiments experiment.launch \
+  roslaunch gym_social start.launch \
     use_amcl:="$use_amcl" \
     max_experiments:="$max_experiments" \
     world_name:="$world_name" \
@@ -69,10 +69,11 @@ do
     global_layers:="$global_layers" \
     local_layers:="$local_layers" \
     observation_sources:="$observation_sources" \
-    path_storage:="$path_storage"
+    path_storage:="$path_storage/" \
+    enable_render:="$enable_render"
   unset ROS_LOG_DIR
 
-  cp `rospack find hera_bringup`/resources/map/"$world_name"/map.pgm $path_storage
+  cp `rospack find hera_bringup`/resources/map/"$map_name"/map.pgm $path_storage
 
 done
 

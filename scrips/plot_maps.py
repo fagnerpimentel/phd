@@ -31,15 +31,15 @@ for dir in dirs:
     if not os.path.exists(path+'/'+dir+"/maps/"):
         os.mkdir(path+'/'+dir+"/maps/")
 
-    if not os.path.exists(path+'/'+dir+"/loc_error/"):
-        os.mkdir(path+'/'+dir+"/loc_error/")
+    # if not os.path.exists(path+'/'+dir+"/loc_error/"):
+    #     os.mkdir(path+'/'+dir+"/loc_error/")
 
     if not os.path.exists(path+'/'+dir+"/factor/"):
         os.mkdir(path+'/'+dir+"/factor/")
 
     result= pd.read_csv(path+'/'+dir+'/result.csv')
     params = yaml.load(open(path+'/'+dir+'/params.yaml', "r"))
-    localization_error = json.loads(open(path+'/'+dir+'/localization_error.json').read())
+    # localization_error = json.loads(open(path+'/'+dir+'/localization_error.json').read())
     factor = json.loads(open(path+'/'+dir+'/real_time_factor.json').read())
     path_min_x = json.loads(open(path+'/'+dir+'/path_plan_x.json').read())
     path_min_y = json.loads(open(path+'/'+dir+'/path_plan_y.json').read())
@@ -54,7 +54,7 @@ for dir in dirs:
     robot_vel = params['robot_vel']
     max_experiments = params['max_experiments']
 
-    s = result['status']=='SUCCESS'
+    s = result['state']=='SUCCESS'
     success = s.sum()/s.size
 
 ################################################################################
@@ -66,7 +66,7 @@ for dir in dirs:
         path_min = np.zeros((a,b,4))
         path_elapsed = np.zeros((a,b,4))
 
-        values_le = localization_error[str(experiment_id)]
+        # values_le = localization_error[str(experiment_id)]
         values_fa = factor[str(experiment_id)]
 
         values_pmx = path_min_x[str(experiment_id)]
@@ -96,10 +96,10 @@ for dir in dirs:
             except Exception as e:
                 print (e)
 
-        factor = 1000
-        img=img[int(a/2-factor):int(a/2+factor), int(b/2-factor):int(b/2+factor)]
-        path_min=path_min[int(a/2-factor):int(a/2+factor), int(b/2-factor):int(b/2+factor)]
-        path_elapsed=path_elapsed[int(a/2-factor):int(a/2+factor), int(b/2-factor):int(b/2+factor)]
+        fac = 1000
+        img=img[int(a/2-fac):int(a/2+fac), int(b/2-fac):int(b/2+fac)]
+        path_min=path_min[int(a/2-fac):int(a/2+fac), int(b/2-fac):int(b/2+fac)]
+        path_elapsed=path_elapsed[int(a/2-fac):int(a/2+fac), int(b/2-fac):int(b/2+fac)]
 
         #######################################################
 
@@ -118,9 +118,9 @@ for dir in dirs:
         plt.close()
 
 
-        plt.clf()
-        sns.lineplot(x=range(0,len(values_le)), y=values_le, palette="tab10", linewidth=2.5)
-        plt.savefig(path+'/'+dir+"/loc_error/"+str(experiment_id)+".png")
+        # plt.clf()
+        # sns.lineplot(x=range(0,len(values_le)), y=values_le, palette="tab10", linewidth=2.5)
+        # plt.savefig(path+'/'+dir+"/loc_error/"+str(experiment_id)+".png")
 
         plt.clf()
         sns.lineplot(x=range(0,len(values_fa)), y=values_fa, palette="tab10", linewidth=2.5)
