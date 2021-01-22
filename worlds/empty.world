@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="default">
+
+    <!-- Camera Pose -->
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <!-- <pose>0 0 0 0 0 0</pose> -->
+      </camera>
+    </gui>
+
+    <!-- physics -->
+    <physics type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+
+    <!-- sun -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- Ground Plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+
+    <!-- <actor name="human_actor">
+      <pose>0 0 1.05 1.5707 0 1.5707</pose>
+      <skin>
+        <filename>walk.dae</filename>
+      </skin>
+      <animation name="stand">
+        <filename>stand.dae</filename>
+        <scale>1.0</scale>
+      </animation>
+      <animation name="walking">
+        <filename>walk.dae</filename>
+        <scale>1.0</scale>
+        <interpolate_x>true</interpolate_x>
+      </animation>
+      <animation name="running">
+        <filename>run.dae</filename>
+        <scale>1.0</scale>
+        <interpolate_x>true</interpolate_x>
+      </animation>
+      <plugin name="actor_control" filename="libactor_control.so"/>
+    </actor> -->
+
+  </world>
+</sdf>

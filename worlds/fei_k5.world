@@ -1,0 +1,30 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+  <world name='default'>
+
+    <!-- Camera Pose -->
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>-12 -24 21 0 1.25 0</pose>
+      </camera>
+    </gui>
+
+    <!-- physics -->
+    <physics type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+
+    <!-- sun -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- fei_k5 -->
+    <include>
+      <name>fei_k5</name>
+      <uri>model://fei_k5</uri>
+    </include>
+
+  </world>
+</sdf>
