@@ -30,20 +30,41 @@ export ROSCONSOLE_FORMAT='[${severity}] [${time}]: ${node}: ${message}'
 source $CATKIN_PATH/devel/setup.bash
 
 ######################################################################
+# REAL
+
+# # permissions for ports
+# sudo chmod 777 /dev/ttyACM*
+# sudo chmod 777 /dev/ttyUSB*
+# sudo chmod 777 /dev/opencm
+#
+# # find ports
+# sudo python path_finder.py 15d1 0000     # laser
+# sudo python path_finder.py 2341 003d     # Arduino base
+# # sudo python path_finder.py 2341 0043   # Arduino head
+# # sudo python path_finder.py fff1 ff48   # Dynamixel
+#
+# xterm -hold -e \
+# 'roslaunch hera_bringup devices.launch' &
+# sleep 5
+
+######################################################################
+# SIMULATION
 
 world_name="$PWD/../worlds/fei_k5__marathon_1.world"
 xterm -hold -e \
 'roslaunch social_worlds start_world.launch \
 world_path:='$world_name' \
-enable_gui:=false' &
+enable_gui:=true' &
 sleep 5
 
-rviz_file="`rospack find social_experiments`/config/rviz/experiment.rviz"
+######################################################################
+
+rviz_file="$PWD/../resources/rviz/experiment.rviz"
 xterm -hold -e \
 'roslaunch hera_bringup interface.launch \
 rviz_file:='$rviz_file' \
-enable_gui_gazebo:=true \
-enable_gui_rviz:=false \
+enable_gui_gazebo:=false \
+enable_gui_rviz:=true \
 enable_gui_teleop:=false \
 enable_gui_telegram:=true' &
 sleep 5
