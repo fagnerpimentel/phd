@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+
+  <obstacle x1="-8" y1="-2.5" x2="8" y2="-2.5"/>
+  <obstacle x1="-8" y1="2.5" x2="8" y2="2.5"/>
+  <obstacle x1="-8" y1="-2.5" x2="-8" y2="2.5"/>
+	<obstacle x1="8" y1="-2.5" x2="8" y2="2.5"/>
+
+  <agent x="0" y="0" n="1" dx="0" dy="0" type="2"/>
+
+  <waypoint id="-6" x="-6" y="0" r="2"/>
+  <waypoint id="-5" x="-5" y="0" r="2"/>
+  <waypoint id="-4" x="-4" y="0" r="2"/>
+  <waypoint id="-3" x="-3" y="0" r="2"/>
+  <waypoint id="-2" x="-2" y="0" r="2"/>
+  <waypoint id="-1" x="-1" y="0" r="2"/>
+  <waypoint id="0" x="-0" y="0" r="2"/>
+  <waypoint id="1" x="1" y="0" r="2"/>
+  <waypoint id="2" x="2" y="0" r="2"/>
+  <waypoint id="3" x="3" y="0" r="2"/>
+  <waypoint id="4" x="4" y="0" r="2"/>
+  <waypoint id="5" x="5" y="0" r="2"/>
+  <waypoint id="6" x="6" y="0" r="2"/>
+
+  <agent x="6" y="0" n="5" dx="0" dy="4" type="0">
+    <addwaypoint id="6"/>
+    <addwaypoint id="5"/>
+    <addwaypoint id="4"/>
+    <addwaypoint id="3"/>
+    <addwaypoint id="2"/>
+    <addwaypoint id="1"/>
+    <addwaypoint id="0"/>
+    <addwaypoint id="-1"/>
+    <addwaypoint id="-2"/>
+    <addwaypoint id="-3"/>
+    <addwaypoint id="-4"/>
+    <addwaypoint id="-5"/>
+    <addwaypoint id="-6"/>
+  </agent>
+
+</scenario>

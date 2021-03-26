@@ -1,0 +1,17 @@
+use_amcl="false"
+global_planner="navfn/NavfnROS"
+local_planner="eband_local_planner/EBandPlannerROS"
+global_layers="[ {name: static_layer, type: 'costmap_2d::StaticLayer'}, {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}]"
+local_layers="[ {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}]"
+observation_sources="laser_scan_front_observation"
+
+##################################################
+
+map="simple_room"
+database="ontology_empty.db"
+robot_path="start goal"
+
+declare -A environment
+environment["sr"]="simple_room empty"
+environment["sr_b"]="simple_room__boxes empty"
+environment["sr_nc"]="simple_room__narrow_corridors empty"

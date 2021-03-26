@@ -1,0 +1,129 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+  <world name='default'>
+
+    <!-- Camera Pose -->
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>-12 -24 21 0 1.25 0</pose>
+      </camera>
+    </gui>
+
+    <!-- physics -->
+    <physics type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+
+    <!-- sun -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- Ground Plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- fei_k5__marathon -->
+    <include>
+      <name>fei_k5__m1</name>
+      <uri>model://fei_k5__cameras</uri>
+    </include>
+
+    <!-- box 1 -->
+    <include>
+      <name>box_1</name>
+      <uri>model://box</uri>
+      <pose>-3 -31 0 0 -0 0</pose>
+    </include>
+
+    <!-- cafe_table 1 -->
+    <include>
+      <name>cafe_table_1</name>
+      <uri>model://cafe_table</uri>
+      <pose>-3 -23 0 0 0 0</pose>
+    </include>
+
+    <!-- box 2 -->
+    <include>
+      <name>box_2</name>
+      <uri>model://box</uri>
+      <pose>-4.5 -18.5 0 0 0 0</pose>
+    </include>
+
+    <!-- box 3 -->
+    <include>
+      <name>box_3</name>
+      <uri>model://box</uri>
+      <pose>-6.5 -14.5 0 0 0 0</pose>
+    </include>
+
+    <!-- cafe_table 2 -->
+    <include>
+      <name>cafe_table_2</name>
+      <uri>model://cafe_table</uri>
+      <pose>-10 -17.5 0 0 0 0</pose>
+    </include>
+
+    <!-- cafe_table 3 -->
+    <include>
+      <name>cafe_table_3</name>
+      <uri>model://cafe_table</uri>
+      <pose>-9 -19.5 0 0 0 0</pose>
+    </include>
+
+    <!-- cafe_table 4 -->
+    <include>
+      <name>cafe_table_4</name>
+      <uri>model://cafe_table</uri>
+      <pose>-11 -19.5 0 0 0 0</pose>
+    </include>
+
+    <!-- box corridor -->
+    <include>
+      <name>box_c1</name>
+      <uri>model://box</uri>
+      <pose>-10 -23.5 0 0 -0 0</pose>
+    </include>
+    <include>
+      <name>box_c2</name>
+      <uri>model://box</uri>
+      <pose>-10 -24.5 0 0 -0 0</pose>
+    </include>
+    <include>
+      <name>box_c3</name>
+      <uri>model://box</uri>
+      <pose>-10 -25.5 0 0 -0 0</pose>
+    </include>
+
+    <!-- small boxes -->
+    <include>
+      <name>box_small_1</name>
+      <uri>model://box_small</uri>
+      <pose>-10 -31.5 0 0 -0 0</pose>
+    </include>
+    <include>
+      <name>box_small_2</name>
+      <uri>model://box_small</uri>
+      <pose>-9.5 -29.5 0 0 -0 0</pose>
+    </include>
+    <include>
+      <name>box_small_3</name>
+      <uri>model://box_small</uri>
+      <pose>-10.5 -29.5 0 0 -0 0</pose>
+    </include>
+
+    <plugin name="locals_data" filename="lib_locals_publisher.so">
+      <local name="start">-2.8 -34.5 0 0 0 0</local>
+      <local name="cp1">-2.8 -27 0 0 0 0</local>
+      <local name="cp2">-4.5 -20 0 0 0 0</local>
+      <local name="cp3">-4.5 -14.5 0 0 0 0</local>
+      <local name="cp4">-10 -14.5 0 0 0 0</local>
+      <local name="cp5">-10 -22 0 0 0 0</local>
+      <local name="cp6">-10 -27 0 0 0 0</local>
+      <local name="goal">-10 -34 0 0 0 0</local>
+    </plugin>
+
+  </world>
+</sdf>

@@ -1,0 +1,21 @@
+use_amcl="false"
+global_planner="navfn/NavfnROS"
+local_planner="teb_local_planner/TebLocalPlannerROS"
+global_layers="[ {name: static_layer, type: 'costmap_2d::StaticLayer'}, {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}]"
+local_layers="[ {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}]"
+observation_sources="laser_scan_front_observation laser_scan_back_observation point_cloud_base_front_observation point_cloud_torso_front_observation"
+
+##################################################
+
+map="simple_room"
+database="ontology_empty.db"
+robot_path="start goal"
+
+declare -A environment
+
+environment["sr_ic"]="simple_room individual_crossing"
+environment["sr_if"]="simple_room individual_front"
+environment["sr_ib"]="simple_room individual_back"
+
+environment["sr_cf"]="simple_room crowd_five"
+environment["sr_ct"]="simple_room crowd_ten"

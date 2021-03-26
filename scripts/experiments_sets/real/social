@@ -1,0 +1,15 @@
+use_amcl="false"
+
+xy_goal_tolerance="0.1"
+# yaw_goal_tolerance="3.1415"
+yaw_goal_tolerance="0.15"
+
+map_config="fei_k5_real/map.yaml"
+database="ontology_real_1.db"
+
+global_planner="navfn/NavfnROS"
+local_planner="teb_local_planner/TebLocalPlannerROS"
+global_layers="[ {name: static_layer, type: 'costmap_2d::StaticLayer'}, {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}, {name: people_layer, type: 'social_layers::SocialLayer'}, {name: interaction_layer, type: 'social_layers::SocialLayer'}]"
+local_layers="[ {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}, {name: people_layer, type: 'social_layers::SocialLayer'}, {name: interaction_layer, type: 'social_layers::SocialLayer'}]"
+# observation_sources="laser_scan_front_observation laser_scan_back_observation point_cloud_base_front_observation point_cloud_torso_front_observation"
+observation_sources="laser_scan_front_observation"

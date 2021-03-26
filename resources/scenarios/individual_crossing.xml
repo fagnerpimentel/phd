@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+
+  <obstacle x1="-8" y1="-2.5" x2="8" y2="-2.5"/>
+  <obstacle x1="-8" y1="2.5" x2="8" y2="2.5"/>
+  <obstacle x1="-8" y1="-2.5" x2="-8" y2="2.5"/>
+	<obstacle x1="8" y1="-2.5" x2="8" y2="2.5"/>
+
+  <agent x="0" y="0" n="1" dx="0" dy="0" type="2"/>
+
+  <waypoint id="A1" x="5" y="-1.5" r="0.1"/>
+  <waypoint id="A2" x="5" y="1.5" r="0.1"/>
+  <agent x="5" y="-1.5" n="1" dx="0" dy="0" type="0">
+    <addwaypoint id="A1"/>
+    <addwaypoint id="A2"/>
+  </agent>
+
+  <waypoint id="B1" x="2" y="-1.5" r="0.1"/>
+  <waypoint id="B2" x="2" y="1.5" r="0.1"/>
+  <agent x="2" y="-1.5" n="1" dx="0" dy="0" type="0">
+    <addwaypoint id="B1"/>
+    <addwaypoint id="B2"/>
+  </agent>
+
+  <waypoint id="C1" x="-2" y="-1.5" r="0.1"/>
+  <waypoint id="C2" x="-2" y="1.5" r="0.1"/>
+  <agent x="-2" y="-1.5" n="1" dx="0" dy="0" type="0">
+    <addwaypoint id="C1"/>
+    <addwaypoint id="C2"/>
+  </agent>
+
+  <waypoint id="D1" x="-5" y="-1.5" r="0.1"/>
+  <waypoint id="D2" x="-5" y="1.5" r="0.1"/>
+  <agent x="-5" y="-1.5" n="1" dx="0" dy="0" type="0">
+    <addwaypoint id="D1"/>
+    <addwaypoint id="D2"/>
+  </agent>
+
+</scenario>

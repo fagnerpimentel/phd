@@ -31,14 +31,16 @@ source $CATKIN_PATH/devel/setup.bash
 
 ######################################################################
 
-rviz_file="`rospack find social_experiments`/config/rviz/experiment.rviz"
-enable_gui_gazebo="false"
+rviz_file="$PWD/../config/experiment.rviz"
+enable_gui_gazebo="true"
 enable_gui_rviz="true"
 enable_gui_teleop="false"
+enable_gui_telegram="false"
 
 # start interface
 roslaunch --wait hera_bringup interface.launch \
   rviz_file:=$rviz_file \
   enable_gui_gazebo:=$enable_gui_gazebo \
   enable_gui_rviz:=$enable_gui_rviz \
-  enable_gui_teleop:=$enable_gui_teleop
+  enable_gui_teleop:=$enable_gui_teleop \
+  enable_gui_telegram:=$enable_gui_telegram

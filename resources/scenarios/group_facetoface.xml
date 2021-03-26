@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+
+  <!-- <obstacle x1="-8" y1="-2.5" x2="8" y2="-2.5"/>
+  <obstacle x1="-8" y1="2.5" x2="8" y2="2.5"/>
+  <obstacle x1="-8" y1="-2.5" x2="-8" y2="2.5"/>
+	<obstacle x1="8" y1="-2.5" x2="8" y2="2.5"/> -->
+
+  <agent x="0" y="0" n="1" dx="0" dy="0" type="2"/>
+
+  <queue id="1-1" x="-5" y="-0.74" direction="0"/>
+  <queue id="1-2" x="-5" y="0.74" direction="0"/>
+  <queue id="2-1" x="-2" y="0.01" direction="0"/>
+  <queue id="2-2" x="-2" y="1.99" direction="0"/>
+  <queue id="3-1" x="2" y="-1.99" direction="0"/>
+  <queue id="3-2" x="2" y="-0.01" direction="0"/>
+  <queue id="4-1" x="5" y="-0.74" direction="0"/>
+  <queue id="4-2" x="5" y="0.74" direction="0"/>
+
+  <agent x="-5" y="-0.75" n="1" dx="0" dy="0" type="0">
+    <addqueue id="1-1"/>
+  </agent>
+  <agent x="-5" y="0.75" n="1" dx="0" dy="0" type="0">
+    <addqueue id="1-2"/>
+  </agent>
+
+  <agent x="-2" y="0" n="1" dx="0" dy="0" type="0">
+    <addqueue id="2-1"/>
+  </agent>
+  <agent x="-2" y="2" n="1" dx="0" dy="0" type="0">
+    <addqueue id="2-2"/>
+  </agent>
+
+  <agent x="2" y="-2" n="1" dx="0" dy="0" type="0">
+    <addqueue id="3-1"/>
+  </agent>
+  <agent x="2" y="0" n="1" dx="0" dy="0" type="0">
+    <addqueue id="3-2"/>
+  </agent>
+
+  <agent x="5" y="-0.75" n="1" dx="0" dy="0" type="0">
+    <addqueue id="4-1"/>
+  </agent>
+  <agent x="5" y="0.75" n="1" dx="0" dy="0" type="0">
+    <addqueue id="4-2"/>
+  </agent>
+
+</scenario>

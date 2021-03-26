@@ -30,8 +30,8 @@ export ROSCONSOLE_FORMAT='[${severity}] [${time}]: ${node}: ${message}'
 source $CATKIN_PATH/devel/setup.bash
 
 ######################################################################
-# REAL
-
+# # REAL
+#
 # # permissions for ports
 # sudo chmod 777 /dev/ttyACM*
 # sudo chmod 777 /dev/ttyUSB*
@@ -50,7 +50,8 @@ source $CATKIN_PATH/devel/setup.bash
 ######################################################################
 # SIMULATION
 
-world_name="$PWD/../worlds/fei_k5__marathon_1.world"
+world_name="$PWD/../resources/worlds/empty.world"
+# world_name="$PWD/../resources/worlds/fei_k5__real_1.world"
 xterm -hold -e \
 'roslaunch social_worlds start_world.launch \
 world_path:='$world_name' \
@@ -59,7 +60,7 @@ sleep 5
 
 ######################################################################
 
-rviz_file="$PWD/../resources/rviz/experiment.rviz"
+rviz_file="$PWD/../config/experiment.rviz"
 xterm -hold -e \
 'roslaunch hera_bringup interface.launch \
 rviz_file:='$rviz_file' \
@@ -75,7 +76,8 @@ params_file=$1
 source $params_file
 
 roslaunch hera_bringup bring_up.launch \
-map_config:="$map_config" \
+map_config:="$PWD/../resources/map/$map_config" \
+database_input:="$PWD/../resources/database/$database" \
 use_amcl:="$use_amcl" \
 global_planner:="$global_planner" \
 local_planner:="$local_planner" \

@@ -38,43 +38,44 @@ source $CATKIN_PATH/devel/setup.bash
 
 params_file=$1
 source $params_file
-max_experiments="2"
+max_experiments="100"
 
 ######################################################################
 
 path=${RESULT_PATH}/${params_file}
 mkdir -p $path/
 
-for world in ${!worlds[@]};
+for env in ${!environment[@]};
 do
 
-  map_params=(${worlds[${world}]})
+  env_params=(${environment[${env}]})
+  world_name=${env_params[0]}
+  scenario_name=${env_params[1]}
 
-  world_name=${map_params[0]}${map_params[1]}
-  map_name=${map_params[0]}
-
-  path_storage=$path/$world
+  path_storage=$path/$env
 
   rm -r $path_storage
   mkdir $path_storage
 
   export ROS_LOG_DIR=$path_storage/log
   roslaunch gym_social start1.launch \
-    use_amcl:="$use_amcl" \
     max_experiments:="$max_experiments" \
-    world_path:="$PWD/../worlds/$world_name.world" \
-    world_name:="$world_name" \
-    map_config:="$PWD/../resources/map/$map_name/map.yaml" \
+    path_storage:="$path_storage/" \
+    use_amcl:="$use_amcl" \
     global_planner:="$global_planner" \
     local_planner:="$local_planner" \
     global_layers:="$global_layers" \
     local_layers:="$local_layers" \
     observation_sources:="$observation_sources" \
-    path_storage:="$path_storage/" \
-    enable_render:="$enable_render"
+    map_config:="$PWD/../resources/maps/$map/map.yaml" \
+    world_name:="$world_name" \
+    world_path:="$PWD/../resources/worlds/$world_name.world" \
+    scenario_path:="$PWD/../resources/scenarios/$scenario_name.xml" \
+    database_input:="$PWD/../resources/databases/$database" \
+    robot_waypoints:="$robot_path"
   unset ROS_LOG_DIR
 
-  cp ../resources/map/"$map_name"/map.pgm $path_storage
+  cp ../resources/map/"$map"/map.pgm $path_storage
 
 done
 
