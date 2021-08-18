@@ -1,0 +1,17 @@
+enable_gazebo="true"
+enable_experiment="true"
+use_amcl="false"
+
+global_planner="navfn/NavfnROS"
+local_planner="teb_local_planner/TebLocalPlannerROS"
+global_layers="[ {name: static_layer, type: 'costmap_2d::StaticLayer'}, {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}, {name: people_layer, type: 'social_layers::SocialLayer'}, {name: object_layer, type: 'social_layers::SocialLayer'}, {name: interaction_layer, type: 'social_layers::SocialLayer'}]"
+local_layers="[ {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}, {name: people_layer, type: 'social_layers::SocialLayer'}, {name: object_layer, type: 'social_layers::SocialLayer'}, {name: interaction_layer, type: 'social_layers::SocialLayer'}]"
+observation_sources="laser_scan_front_observation laser_scan_back_observation point_cloud_base_front_observation point_cloud_torso_front_observation"
+
+##################################################
+
+robot_path="start cp1 cp2 cp3 cp4 cp5 cp6 goal"
+
+# maps - gazebo_worlds - pedsim_scenarios - locals_objects
+declare -A environment
+environment["fk_m"]="fei_k5 fei_k5__navigation_obstacles empty fei_k5__navigation"

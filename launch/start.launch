@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="robot_name"             default="robot"/>
+
+  <arg name="enable_gazebo"          default="true"/>
+  <arg name="enable_experiment"      default="true"/>
+  <arg name="use_amcl"               default="true"/>
+
+  <arg name="path_storage"           default=""/>
+  <arg name="max_experiments"        default=""/>
+  <arg name="robot_waypoints"        default=""/>
+
+  <arg name="global_planner"         default="navfn/NavfnROS"/>
+  <arg name="local_planner"          default="base_local_planner/TrajectoryPlannerROS"/>
+  <arg name="global_layers"          default="[ {name: static_layer, type: 'costmap_2d::StaticLayer'}, {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}]" />
+  <arg name="local_layers"           default="[ {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}]"/>
+  <arg name="observation_sources"    default="laser_scan_front_observation"/>
+
+  <arg name="world_name"             default=""/>
+  <arg name="map_path"               default=""/>
+  <arg name="world_path"             default=""/>
+  <arg name="scenario_path"          default=""/>
+  <arg name="locals_objects_path"    default=""/>
+
+<!-- ###################################################################### -->
+<!-- ###################################################################### -->
+<!-- ###################################################################### -->
+
+  <!-- gazebo -->
+  <group if="$(arg enable_gazebo)" >
+    <include file="$(find social_worlds)/launch/start_world.launch" >
+      <arg name="world_path" default="$(arg world_path)" />
+      <arg name="enable_gui" default="false" />
+      <arg name="paused"     default="false" />
+    </include>
+  </group>
+
+  <!-- experiment -->
+  <!-- <group if="$(arg enable_experiment)" >
+    <node name="gym_social" pkg="gym_social" type="test1.py"
+      output="screen" required="true">
+      <param name="enable_render"             value="false"/>
+      <param name="path_storage"              value="$(arg path_storage)"/>
+      <param name="max_experiments"           value="$(arg max_experiments)"/>
+      <param name="robot_waypoints"           value="$(arg robot_waypoints)"/>
+      <param name="global_planner"            value="$(arg global_planner)"/>
+      <param name="local_planner"             value="$(arg local_planner)"/>
+      <param name="world_model_name"          value="$(arg world_name)"/>
+      <param name="robot_model_name"          value="$(arg robot_name)"/>
+      <param name="robot_max_vel"             value="0.3"/>
+      <param name="space_factor_tolerance"    value="5"/>
+      <param name="time_factor_tolerance"     value="5"/>
+    </node>
+  </group> -->
+
+  <!-- ###################################################################### -->
+  <!-- ###################################################################### -->
+  <!-- ###################################################################### -->
+
+  <!-- robot -->
+  <include file="$(find hera_bringup)/launch/bring_up.launch" >
+    <arg name="use_amcl"              default="$(arg use_amcl)"/>
+    <arg name="map_path"              default="$(arg map_path)"/>
+    <arg name="global_planner"        default="$(arg global_planner)"/>
+    <arg name="local_planner"         default="$(arg local_planner)"/>
+    <arg name="global_layers"         default="$(arg global_layers)"/>
+    <arg name="local_layers"          default="$(arg local_layers)"/>
+    <arg name="observation_sources"   default="$(arg observation_sources)"/>
+  </include>
+
+  <!-- robot control (set head and kinect_plat to predefined angles (0.0 and 0.96))-->
+  <node name="head_publisher" pkg="rostopic" type="rostopic" output="screen"
+    args="pub /control/head std_msgs/Float64 'data: 0.0'" />
+  <node name="kinect_plat_publisher" pkg="rostopic" type="rostopic" output="screen"
+    args="pub /control/kinect_plat std_msgs/Float64 'data: 0.96'" />
+
+  <!-- pub_locals_objects -->
+  <node name="pub_locals_objects" pkg="phd" type="pub_locals_objects.py" output="screen">
+    <param name="locals_objects_path" value="$(arg locals_objects_path)" />
+  </node>
+
+  <!-- pub_people -->
+  <node name="pedsim_simulator" pkg="pedsim_simulator" type="pedsim_simulator" output="screen">
+    <param name="scene_file" value="$(arg scenario_path)" type="string"/>
+    <param name="enable_groups" value="true" type="bool"/>
+    <param name="robot_mode" value="1" type="int"/>
+    <param name="frame_id" value="map" type="string"/>
+  </node>
+  <node name="pedsim_to_social" pkg="phd" type="pedsim_to_social.py" output="screen" />
+  <!-- people visualizer -->
+  <include file="$(find pedsim_visualizer)/launch/visualizer.launch"/>
+  <node pkg="pedsim_gazebo_plugin" type="spawn_pedsim_agents.py" name="spawn_pedsim_agents"  output="screen">
+    <param name="actor_model_file" value="$(find social_worlds)/models/human_cylinder_visual/model.sdf"/>
+  </node>
+
+  <!-- ###################################################################### -->
+  <!-- ###################################################################### -->
+  <!-- ###################################################################### -->
+
+  <!-- real time factor publisher -->
+  <node name="real_time_factor_publisher_node" pkg="social_worlds" type="real_time_factor_publisher_node" output="screen">
+    <param name="world_name" value="default"/>
+  </node>
+
+  <!-- sincronize simulation factos of gazebo with pedsim -->
+  <node pkg="pedsim_gazebo_plugin" type="update_pedsim_factor.py" name="update_pedsim_factor" output="screen">
+    <param name="node_to_reconfigure" value="pedsim_simulator"/>
+    <param name="topic_with_new_factor" value="real_time_factor"/>
+  </node>
+
+  <!-- check robot collisions -->
+  <node name="check_collision_node" pkg="social_worlds" type="check_collision_node" output="screen">
+    <param name="world_name" value="$(arg world_name)"/>
+    <param name="robot_name" value="$(arg robot_name)"/>
+  </node>
+
+  <!-- check_region -->
+  <node name="check_forbidden_region" pkg="social_worlds" type="check_region_node" output="screen">
+    <param name="region_name" value="forbidden_region"/>
+    <param name="model_name" value="$(arg robot_name)"/>
+  </node>
+
+  <!-- ###################################################################### -->
+  <!-- ###################################################################### -->
+  <!-- ###################################################################### -->
+
+  <!-- extract_data -->
+  <node name="extract_data" pkg="phd" type="extract_data.py" output="screen">
+    <param name="path_storage"              value="$(arg path_storage)"/>
+    <param name="global_planner"            value="$(arg global_planner)"/>
+    <param name="robot_max_vel"             value="0.3"/>
+    <param name="space_factor_tolerance"    value="5"/>
+    <param name="time_factor_tolerance"     value="5"/>
+  </node>
+
+  <!-- experiment -->
+  <group if="$(arg enable_experiment)" >
+    <node name="experiment" pkg="phd" type="experiment.py" output="screen" required="true">
+      <param name="max_experiments"           value="$(arg max_experiments)"/>
+      <param name="robot_waypoints"           value="$(arg robot_waypoints)"/>
+      <param name="robot_model_name"          value="$(arg robot_name)"/>
+    </node>
+  </group>
+
+
+  <!-- <include file="$(find hera_bringup)/launch/devices.launch" /> -->
+
+
+</launch>

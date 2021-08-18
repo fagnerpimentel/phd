@@ -3,15 +3,15 @@
 export CATKIN_PATH=/home/alunos/fpimentel/catkin_fagner
 export RESULT_PATH=/home/alunos/
 
+# permissions for ports
+sudo chmod 777 /dev/ttyACM*
+sudo chmod 777 /dev/ttyUSB*
+sudo chmod 777 /dev/opencm
+
 cd ../scripts/
 
-# ./start_real.sh experiments_sets/test
+./start_experiment.sh experiments_sets/real/common_1
 
-# ./start_real.sh experiments_sets/real/commom
-./start_real.sh experiments_sets/real/social
-
-# ./start_simulation.sh experiments_sets/real/commom-simulation-1
-# ./start_simulation.sh experiments_sets/real/social-simulation-1
-
-# ./start_simulation.sh experiments_sets/real/commom-simulation-2
-# ./start_simulation.sh experiments_sets/real/social-simulation-2
+#./start_experiment.sh experiments_sets/real/social_0
+# ./start_experiment.sh experiments_sets/real/social_1
+# ./start_experiment.sh experiments_sets/real/social_2

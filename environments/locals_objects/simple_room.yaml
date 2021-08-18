@@ -1,0 +1,22 @@
+locals:
+  start:
+    position:
+      x: -6.75
+      y: 0.0
+      z: 0.0
+    orientation:
+      x: 0.0
+      y: 0.0
+      z: 0.0
+      w: 1.0
+  goal:
+    position:
+      x: 6.75
+      y: 0.0
+      z: 0.0
+    orientation:
+      x: 0.0
+      y: 0.0
+      z: 0.0
+      w: 1.0
+objects: {}

@@ -1,0 +1,42 @@
+locals:
+  cp1:
+    position:
+      x: -23.62
+      y: 19.50
+      z: 0.0
+    orientation:
+      x: 0.0
+      y: 0.0
+      z: 0.34
+      w: 0.93
+  cp2:
+    position:
+      x: -28.39
+      y: 25.29
+      z: 0.0
+    orientation:
+      x: 0.0
+      y: 0.0
+      z: -0.07
+      w: 0.99
+  cp3:
+    position:
+      x: -23.43
+      y: 29.70
+      z: 0.0
+    orientation:
+      x: 0.0
+      y: 0.0
+      z: -0.66
+      w: 0.75
+  cp4:
+    position:
+      x: -17.58
+      y: 23.66
+      z: 0.0
+    orientation:
+      x: 0.0
+      y: 0.0
+      z: 0.99
+      w: 0.03
+objects: {}

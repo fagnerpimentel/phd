@@ -16,7 +16,7 @@ def init_subscriber(_topic, _msg_type, _callback):
 class pedsim_to_social():
     def __init__(self):
         init_subscriber('/pedsim_simulator/simulated_agents', AgentStates, self.callback_people)
-        self.pub_locals = init_publisher('people_data', People)
+        self.pub_people = init_publisher('people_data', People)
         rospy.spin()
 
     def callback_people(self, msg):
@@ -28,7 +28,7 @@ class pedsim_to_social():
             p.pose = person.pose
             p.pose.position.z += 1
             people.people.append(p)
-        self.pub_locals.publish(people)
+        self.pub_people.publish(people)
 
 
 if __name__ == '__main__':

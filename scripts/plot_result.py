@@ -48,9 +48,9 @@ for dir in dirs:
     result=pd.read_csv(path+'/'+dir+'/result.csv')
     max_experiments = result.i.count()
 
+    people = json.loads(open(path+'/'+dir+'/people.json').read())
     path_elapsed_x = json.loads(open(path+'/'+dir+'/path_executed_x.json').read())
     path_elapsed_y = json.loads(open(path+'/'+dir+'/path_executed_y.json').read())
-    people = json.loads(open(path+'/'+dir+'/people.json').read())
 
     SUCCESS = result.state.tolist().count('SUCCESS') / max_experiments
     SPACE_EXCEEDED = result.state.tolist().count('SPACE_EXCEEDED') / max_experiments

@@ -1,4 +1,7 @@
+enable_gazebo="true"
+enable_experiment="true"
 use_amcl="false"
+
 global_planner="navfn/NavfnROS"
 local_planner="teb_local_planner/TebLocalPlannerROS"
 global_layers="[ {name: static_layer, type: 'costmap_2d::StaticLayer'}, {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}, {name: people_layer, type: 'social_layers::SocialLayer'}, {name: object_layer, type: 'social_layers::SocialLayer'}, {name: interaction_layer, type: 'social_layers::SocialLayer'}]"
@@ -7,12 +10,11 @@ observation_sources="laser_scan_front_observation laser_scan_back_observation po
 
 ##################################################
 
-map="simple_room"
-database="ontology_empty.db"
 robot_path="start goal"
 
+# maps - gazebo_worlds - pedsim_scenarios - locals_objects
 declare -A environment
-environment["sr_is"]="simple_room__individual_static individual_static"
-environment["sr_io"]="simple_room__individual_objects individual_objects"
-environment["sr_gf"]="simple_room__group_facetoface group_facetoface"
-environment["sr_gc"]="simple_room__group_circular group_circular"
+#environment["sr_is"]="simple_room simple_room__individual_static individual_static simple_room"
+environment["sr_io"]="simple_room simple_room__individual_objects individual_objects simple_room"
+#environment["sr_gf"]="simple_room simple_room__group_facetoface group_facetoface simple_room"
+#environment["sr_gc"]="simple_room simple_room__group_circular group_circular simple_room"

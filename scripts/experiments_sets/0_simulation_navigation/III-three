@@ -1,4 +1,7 @@
+enable_gazebo="true"
+enable_experiment="true"
 use_amcl="false"
+
 global_planner="navfn/NavfnROS"
 local_planner="teb_local_planner/TebLocalPlannerROS"
 global_layers="[ {name: static_layer, type: 'costmap_2d::StaticLayer'}, {name: obstacles_layer, type: 'costmap_2d::VoxelLayer'}, {name: inflation_layer, type: 'costmap_2d::InflationLayer'}]"
@@ -7,11 +10,10 @@ observation_sources="laser_scan_front_observation laser_scan_back_observation po
 
 ##################################################
 
-map="simple_room"
-database="ontology_empty.db"
 robot_path="start goal"
 
+# maps - gazebo_worlds - pedsim_scenarios - locals_objects
 declare -A environment
-environment["sr_t"]="simple_room__tables empty"
-environment["sr_bs"]="simple_room__boxes_small empty"
-environment["sr_i"]="simple_room__mix_1 empty"
+environment["sr_t"]="simple_room simple_room__tables empty simple_room"
+environment["sr_bs"]="simple_room simple_room__boxes_small empty simple_room"
+environment["sr_i"]="simple_room simple_room__mix_1 empty simple_room"

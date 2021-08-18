@@ -38,9 +38,9 @@ for dir in dirs:
         os.mkdir(path+'/'+dir+"/factor/")
 
     result= pd.read_csv(path+'/'+dir+'/result.csv')
-    params = yaml.load(open(path+'/'+dir+'/params.yaml', "r"))
+    # params = yaml.load(open(path+'/'+dir+'/params.yaml', "r"))
     # localization_error = json.loads(open(path+'/'+dir+'/localization_error.json').read())
-    factor = json.loads(open(path+'/'+dir+'/real_time_factor.json').read())
+    # factor = json.loads(open(path+'/'+dir+'/real_time_factor.json').read())
     path_min_x = json.loads(open(path+'/'+dir+'/path_plan_x.json').read())
     path_min_y = json.loads(open(path+'/'+dir+'/path_plan_y.json').read())
     path_elapsed_x = json.loads(open(path+'/'+dir+'/path_executed_x.json').read())
@@ -51,8 +51,9 @@ for dir in dirs:
     img = mpimg.imread(path+'/'+dir+'/map.pgm')
     img = np.flipud(img.T)
 
-    robot_vel = params['robot_vel']
-    max_experiments = params['max_experiments']
+    print("tamanho+ " + str(len(result)))
+    robot_vel = 0.3 # params['robot_vel']
+    max_experiments = 2 #params['max_experiments']
 
     s = result['state']=='SUCCESS'
     success = s.sum()/s.size
@@ -67,7 +68,7 @@ for dir in dirs:
         path_elapsed = np.zeros((a,b,4))
 
         # values_le = localization_error[str(experiment_id)]
-        values_fa = factor[str(experiment_id)]
+        # values_fa = factor[str(experiment_id)]
 
         values_pmx = path_min_x[str(experiment_id)]
         values_pmy = path_min_y[str(experiment_id)]
@@ -122,6 +123,6 @@ for dir in dirs:
         # sns.lineplot(x=range(0,len(values_le)), y=values_le, palette="tab10", linewidth=2.5)
         # plt.savefig(path+'/'+dir+"/loc_error/"+str(experiment_id)+".png")
 
-        plt.clf()
-        sns.lineplot(x=range(0,len(values_fa)), y=values_fa, palette="tab10", linewidth=2.5)
-        plt.savefig(path+'/'+dir+"/factor/"+str(experiment_id)+".png")
+        # plt.clf()
+        # sns.lineplot(x=range(0,len(values_fa)), y=values_fa, palette="tab10", linewidth=2.5)
+        # plt.savefig(path+'/'+dir+"/factor/"+str(experiment_id)+".png")
